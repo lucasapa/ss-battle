@@ -7,6 +7,7 @@ public class Player {
     private String username;
     private WebSocket.Out<JsonNode> channel;
     private String gameId;
+    private Strategy strategy;
 
     public Player(String username, WebSocket.Out<JsonNode> channel, String gameId) {
         this.username = username;
@@ -28,5 +29,13 @@ public class Player {
 
     public String toString() {
         return username;
+    }
+
+    public void setStrategy(Strategy strategy){
+        this.strategy = strategy;
+    }
+
+    public Strategy getStrategy(){
+        return strategy;
     }
 }

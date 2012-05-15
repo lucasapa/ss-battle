@@ -1,10 +1,16 @@
 package models;
 
+import models.ships.LeviathanShip;
+import models.ships.Ship;
 import org.codehaus.jackson.node.ObjectNode;
 import play.libs.Json;
 
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.Random;
 import java.util.UUID;
+import java.awt.geom.Line2D.Float;
 
 public class Game {
     private String gameId;
@@ -12,7 +18,7 @@ public class Game {
     private Player playerTwo;
     private Player currentPlayer;
     private boolean started;
-    private int leavers;
+    private int size;
 
     public Game() {
         gameId = UUID.randomUUID().toString();
@@ -20,7 +26,6 @@ public class Game {
 
     void startGame() {
         started = true;
-        leavers = 0;
         setRandomTurn();
         notifyStart();
         generateDefaultStrategies();
@@ -34,7 +39,15 @@ public class Game {
     }
 
     private void generateDefaultStrategies() {
-	//TODO Default Strategy
+	    Strategy strategy = new Strategy(size);
+        for(int i=0;i<size;i++){
+            Ship ship = new LeviathanShip();
+            int shipSize = ship.getSize();
+            int verticaPosition = ((int) Math.random() * size);
+            int horizontalPosition = ((int) Math.random() * size);
+             Line2D.Float position = new Line2D.Float(new Point(1,1), new Point(1,1));
+            strategy.addShip(position,ship);
+        }
     }
 
     public void setPlayerA(Player playerOne) {
@@ -67,10 +80,14 @@ public class Game {
         }
     }
 
-    public void leave(Player player) {
-        Player quitter = isCurrent(player) ? getAlternative() : getCurrentPlayer();
-	//TODO: Falta ver como removemos el usuario
-        message(quitter, "leave", "Other played left the game!");
+    public void leave(Player quitter) {
+        if(playerOne == quitter){
+            playerOne = null;
+            message(playerTwo, "leave", "Other played left the game!");
+        }else{
+            playerTwo = null;
+            message(playerOne, "leave", "Other played left the game!");
+        }
     }
 
     public void chat(Player player, String talk) {

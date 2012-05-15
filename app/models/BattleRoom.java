@@ -29,7 +29,6 @@ public class BattleRoom {
 		} else {
 		    createNewGame();
 		    join(username, in, out);
-		    //out.write(fullServerMsg());
 		}
 	}
 
