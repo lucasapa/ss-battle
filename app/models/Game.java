@@ -1,13 +1,14 @@
 package models;
 
-import models.ships.LeviathanShip;
-import models.ships.Ship;
+import models.ships.*;
 import org.codehaus.jackson.node.ObjectNode;
 import play.libs.Json;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.awt.geom.Line2D.Float;
@@ -18,6 +19,7 @@ public class Game {
     private Player playerTwo;
     private Player currentPlayer;
     private boolean started;
+    private List<Ship> shipList = new ArrayList<Ship>();
     private int size;
 
     public Game() {
@@ -32,6 +34,15 @@ public class Game {
         notifyTurn();
     }
 
+    public void loadShips(){
+        shipList.add(new LeviathanShip());
+        shipList.add(new NinjaAssassinShip());
+        shipList.add(new KakarotShip());
+        shipList.add(new RedRibbonShip());
+        shipList.add(new JackieShip());
+
+    }
+
     private void setRandomTurn() {
         Random turnRoller = new Random();
         int roll = turnRoller.nextInt(2) + 1;
@@ -40,9 +51,20 @@ public class Game {
 
     private void generateDefaultStrategies() {
 	    Strategy strategy = new Strategy(size);
+        for(Ship ship:shipList){
+            while(true){
+                ship.setOrientation(Math.random() > 0.5);
+                Point2D center = new Point((int)Math.random()*size, (int)Math.random()*size);
+                Line2D.Float position;
+                if(ship.getOrientation()){
+                    //position = new Line2D.Float(center, new Point(center.getX(), center.getY()+ship.getSize()));
+                }
+            }
+        }
+
         for(int i=0;i<size;i++){
             Ship ship = new LeviathanShip();
-            int shipSize = ship.getSize();
+
             int verticaPosition = ((int) Math.random() * size);
             int horizontalPosition = ((int) Math.random() * size);
              Line2D.Float position = new Line2D.Float(new Point(1,1), new Point(1,1));

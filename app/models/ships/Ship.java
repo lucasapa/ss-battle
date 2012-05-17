@@ -4,18 +4,18 @@ public abstract class Ship {
 
     private int size;
     private String name;
-    private String[] position;
+    private boolean vertical;
+    private boolean sunk = false;
 
     public abstract int getSize();
     public abstract String getName();
 
-    public void setPosition(String[] position) {
-        this.position = position;
+
+    public void setOrientation(boolean vertical) {
+        this.vertical = vertical;
     }
 
-    public String[] getPosition() {
-        return position;
+    public boolean getOrientation() {
+        return vertical;
     }
-
-
 }

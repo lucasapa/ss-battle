@@ -1,13 +1,13 @@
 package models.ships;
 
-public class NinjaAssassinShip extends Ship {
+public class JackieShip extends Ship{
     @Override
     public int getSize() {
-        return 1;
+        return 3;
     }
 
     @Override
     public String getName() {
-        return "NinjaAssassin";
+        return "Leviathan";
     }
 }

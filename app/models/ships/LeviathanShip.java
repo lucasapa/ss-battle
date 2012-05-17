@@ -3,7 +3,7 @@ package models.ships;
 public class LeviathanShip extends Ship{
     @Override
     public int getSize() {
-        return 10;
+        return 5;
     }
 
     @Override
