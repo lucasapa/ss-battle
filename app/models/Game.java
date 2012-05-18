@@ -42,25 +42,38 @@ public class Game {
         getAlternative().setStrategy(strategy);
 
         for(Ship ship:strategy.getShips()){
-            boolean valid = true;
-            int fragments = 0;
-            while(!valid || fragments < ship.getFragments().size()){
-                ship.setOrientation(Math.random() > 0.5);
-                ShipFragment center = new ShipFragment((int)Math.random()*size, (int)Math.random()*size);
-                if(ship.getOrientation()){
-                    for(int i = 0; i<ship.getSize();i++){
-                        valid = strategy.addShipFragment(ship, new ShipFragment((int)center.getX(),(int)center.getY()+i));
-                    }
-                }else{
-                    for(int i = 0; i<ship.getSize();i++){
-                        valid  = strategy.addShipFragment(ship, new ShipFragment((int)center.getX()+i,(int)center.getY()));
-                    }
+            while(true){
+                 if(generateShipDefaultStrategy(ship,strategy)){
+                     break;
+                 }
+            }
+        }
+
+
+
+
+    }
+
+    private boolean generateShipDefaultStrategy(Ship ship, Strategy strategy) {
+
+        for(int i=0;i<ship.getFragments().size();i++){
+            ship.setOrientation(Math.random() > 0.5);
+            ShipFragment center = new ShipFragment((int)Math.random()*size, (int)Math.random()*size);
+            if(ship.getOrientation()){
+                for(int j = 0; j<ship.getSize();j++){
+                    if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX(),(int)center.getY()+j))){
+                        return false;
+                    };
                 }
-                if(valid){
-                    fragments++;
+            }else{
+                for(int j = 0; j<ship.getSize();j++){
+                    if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX()+j,(int)center.getY()))){
+                        return false;
+                    };
                 }
             }
         }
+        return true;
 
     }
 
