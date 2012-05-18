@@ -11,24 +11,39 @@ import models.ships.*;
 public class Strategy {
 
 
-    //List<Ship> ships;
+    private List<Ship> ships;
 
-    HashMap<Line2D.Float,Ship> layout;
-
-    private int size;
-
-    public Strategy(int size){
-        this.size = size;
-        layout = new HashMap<Line2D.Float,Ship>();
+    public Strategy(){
+        ships = new ArrayList<Ship>();
+        loadShips();
     }
 
-    public boolean addShip(Line2D.Float position, Ship ship){
-        if (layout.size() < size){
-            layout.put(position,ship);
-            return true;
-        }
-        return false;
+    public void loadShips(){
+        ships.add(new LeviathanShip());
+        ships.add(new NinjaAssassinShip());
+        ships.add(new KakarotShip());
+        ships.add(new RedRibbonShip());
+        ships.add(new JackieShip());
+    }
 
+    public boolean addShipFragment(Ship ship, ShipFragment fragment){
+        for(Ship addedship:ships){
+            for(ShipFragment addedFragment:ship.getFragments()){
+                   if((addedFragment.getX() == fragment.getX()) && (addedFragment.getY() == fragment.getY())){
+                       return false;
+                   }
+            }
+        }
+        ship.addFragment(fragment);
+        return true;
+    }
+
+    public List<Ship> getShips() {
+        return ships;
+    }
+
+    public void setShips(List<Ship> ships) {
+        this.ships = ships;
     }
 
 }
