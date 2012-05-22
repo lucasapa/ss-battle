@@ -1,9 +1,10 @@
 @(username: String)
 
 @main(username) {
-    
+
+<input id="WSocketPath" value="@routes.Application.game(username).webSocketURL(request)" style="display: none;">
     <div class="page-header">
-        <h1>Welcome to the battle room <small>You are playing as <b>@username<b></small></h1>
+        <h1>Welcome to the battle room <small>You are playing as <b>@username</b></small></h1>
     </div>
     
     <div id="onError" class="alert-message error">
@@ -24,61 +25,47 @@
             </ul>
         </div>
     </div>
-    
-    <script type="text/javascript" charset="utf-8">
-    
-        $(function() {
-            var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
-	        var chatSocket = new WS("@routes.Application.game(username).webSocketURL(request)")
-            
-            var sendMessage = function() {
-                chatSocket.send(JSON.stringify(
-                    {text: $("#talk").val()}
-                ))
-                $("#talk").val('')
-            }
-            
-            var receiveEvent = function(event) {
-                var data = JSON.parse(event.data)
-                
-                // Handle errors
-                if(data.error) {
-                    chatSocket.close()
-                    $("#onError span").text(data.error)
-                    $("#onError").show()
-                    return
-                } else {
-                    $("#onChat").show()
-                }
-                
-                // Create the message element
-                var el = $('<div class="message"><span></span><p></p></div>')
-                $("span", el).text(data.user)
-                $("p", el).text(data.message)
-                $(el).addClass(data.kind)
-                if(data.user == '@username') $(el).addClass('me')
-                $('#messages').append(el)
-                
-                // Update the members list
-                $("#members").html('') 
-                $(data.members).each(function() {
-                    $("#members").append('<li>' + this + '</li>')
-                })
-            }
-            
-            var handleReturnKey = function(e) {
-                if(e.charCode == 13 || e.keyCode == 13) {
-                    e.preventDefault()
-                    sendMessage()
-                } 
-            }
-            
-            $("#talk").keypress(handleReturnKey)  
-            
-            chatSocket.onmessage = receiveEvent
-            
-        })
-    
-    </script>
-    
+    <div id="questionPanel">
+         <select id="X">
+             <option value="">Eje Y</option>
+             <option value="Y">0</option>
+             <option value="Y">1</option>
+             <option value="Y">2</option>
+             <option value="Y">3</option>
+             <option value="Y">4</option>
+             <option value="Y">5</option>
+             <option value="Y">6</option>
+             <option value="Y">7</option>
+             <option value="Y">8</option>
+             <option value="Y">9</option>
+         </select>
+         <select id="Y">
+                <option value="">Eje X</option>
+                <option value="X">0</option>
+                <option value="X">1</option>
+                <option value="X">2</option>
+                <option value="X">3</option>
+                <option value="X">4</option>
+                <option value="X">5</option>
+                <option value="X">6</option>
+                <option value="X">7</option>
+                <option value="X">8</option>
+                <option value="X">9</option>
+         </select>
+            <button id="askBt" onclick="askQuestion()">Ask</button>
+    </div>
+
+        <div id="answerPanel">
+            <button id="yesBt" onclick="answerQuestion('Yes')">YES</button>
+            <button id="noBt" onclick="answerQuestion('No')">NO</button>
+        </div>
+
+<div id="winner">
+    <button id="youwin" style="display: none; " onclick="alert('YOU WINN')">YOU WIN!!!</button>
+</div>
+
+<script src="@routes.Assets.at("javascripts/jquery-1.7.2.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/WSocketServer.js")"></script>
+<script src="@routes.Assets.at("javascripts/jquery.chained.js")"></script>
+<script type="text/javascript" charset="utf-8">$("#askQuestions");</script>
 }

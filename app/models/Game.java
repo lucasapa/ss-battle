@@ -1,51 +1,61 @@
 package models;
 
-import models.ships.*;
+import models.ships.Ship;
+import models.ships.ShipFragment;
 import org.codehaus.jackson.node.ObjectNode;
 import play.libs.Json;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
-
+/**
+ * Created by Mart0
+ * Date: 4/24/12
+ */
 public class Game {
     private String gameId;
     private Player playerOne;
     private Player playerTwo;
     private Player currentPlayer;
-    private boolean started;
+    private TurnState currentState;
+    private boolean start;
+    private int leavers;
     private int size;
+
 
     public Game() {
         gameId = UUID.randomUUID().toString();
+        size=10;
     }
 
     void startGame() {
-        started = true;
+        start = true;
+        leavers = 0;
         setRandomTurn();
         notifyStart();
         generateDefaultStrategies();
         notifyTurn();
     }
 
-
-
     private void setRandomTurn() {
         Random turnRoller = new Random();
         int roll = turnRoller.nextInt(2) + 1;
         currentPlayer = roll == 1 ? playerOne : playerTwo;
+        currentState = TurnState.ASKING;
     }
 
     private void generateDefaultStrategies() {
-	    Strategy strategy = new Strategy();
+        Strategy strategy = new Strategy();
         getCurrentPlayer().setStrategy(strategy);
         getAlternative().setStrategy(strategy);
 
         for(Ship ship:strategy.getShips()){
             while(true){
-                 if(generateShipDefaultStrategy(ship,strategy)){
-                     break;
-                 }
+                if(generateShipDefaultStrategy(ship,strategy)){
+                    break;
+                }
             }
         }
 
@@ -82,43 +92,53 @@ public class Game {
         message(playerOne, "wait", "Waiting for other player to join.....");
     }
 
-    public void setPlayerB(Player playerB) {
-        this.playerTwo = playerB;
-	message(playerOne, "wait", "The game is about to begin");
-	message(playerTwo, "wait", "The game is about to begin");
-    }
-
     private void notifyStart() {
-        message(getCurrentPlayer(), "start", "Test your might, you are playing against " + getAlternative().getUsername());
-        message(getAlternative(), "start", "Test your might, you are playing against " + getCurrentPlayer().getUsername());
+        message(getCurrentPlayer(), "start", "Let's play WHO IS WHO, You're playing against " + getAlternative().getUsername());
+        message(getAlternative(), "start", "Let's play WHO IS WHO, You're playing against " + getCurrentPlayer().getUsername());
     }
 
     private void notifyTurn() {
-        message(getCurrentPlayer(), "play", "You're move!");
-        message(getAlternative(), "wait", "Other player's move!");
-    }
-
-    private void ShootCalculation(Player player, String position) {
-        if (position.equalsIgnoreCase("")) {
-            Game.message(player, "mistake", "Not a valid shoot");
+        if (currentState == TurnState.ASKING) {
+            message(getCurrentPlayer(), "ask", "It's your turn, Ask a question");
+            message(getAlternative(), "wait", "Other player's turn!");
         } else {
-            message(getCurrentPlayer(), "my-ask", position);
-            message(getAlternative(), "op-ask", position);
+            message(getAlternative(), "answer", "Answer the question");
+            message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+" answer");
         }
     }
 
-    public void leave(Player quitter) {
-        if(playerOne == quitter){
-            playerOne = null;
-            message(playerTwo, "leave", "Other played left the game!");
-        }else{
-            playerTwo = null;
-            message(playerOne, "leave", "Other played left the game!");
+    private void AskCalculation(Player player, String questionAbout, String questionValue, String questionString) {
+        if (questionAbout.equals("") || questionValue.equals("") || questionString.equals("")) {
+            message(player, "mistake", "Please, Choose valid question and then Press ASK button");
+        } else {
+            message(getCurrentPlayer(), "my-ask", questionString);
+            message(getAlternative(), "op-ask", questionString);
+            changeTurn();
+            notifyTurn();
+        }
+    }
+
+    private void answerCalculation(Player player, String answer) {
+        if (answer.equals("")) {
+            message(player, "mistake", "Please, Choose a valid answer");
+        } else {
+            message(getCurrentPlayer(), "op-answer", answer);
+            message(getAlternative(), "my-answer", answer);
+            changeTurn();
+            notifyTurn();
+        }
+    }
+
+    public void leave(Player player) {
+        leavers++;
+        if (playerOne != null && playerTwo != null) {
+            Player notQuitter = isCurrent(player) ? getAlternative() : getCurrentPlayer();
+            message(notQuitter, "leave", "Other played left the game!");
         }
     }
 
     public void chat(Player player, String talk) {
-        if (started) {
+        if (start) {
             chatMessage(getCurrentPlayer(), "chat", player.getUsername(), talk);
             chatMessage(getAlternative(), "chat", player.getUsername(), talk);
         } else {
@@ -126,18 +146,60 @@ public class Game {
         }
     }
 
-    public void shoot(Player player, String position) {
-        if (started) {
+    public void answer(Player player, String answer) {
+        if (getAlternative() == player) {
+            answerCalculation(player, answer);
+        } else {
+            message(player, "wait", "Not your move!");
+        }
+    }
+
+
+    public void ask(Player player, String questionAbout, String questionValue, String questionString) {
+        if (start) {
             if (getCurrentPlayer() == player) {
-                ShootCalculation(player, position);
-                changeTurn();
-                notifyTurn();
+                AskCalculation(player, questionAbout, questionValue, questionString);
             } else {
-                message(player, "wait", "Opponent turn");
+                message(player, "wait", "Not your move!");
             }
         } else {
-            message(player, "wait", "Waiting for opponent....");
+            message(player, "wait", "Still Waiting for oponent....");
         }
+    }
+
+    public void shoot(Player player, String []point){
+
+               int x = Integer.getInteger(point[0]);
+               int y = Integer.getInteger(point[1]);
+
+               for (Ship ship : getAlternative().getStrategy().getShips()){
+                   for (ShipFragment fragment : ship.getFragments()) {
+                       if (fragment.getX()==x && fragment.getY()==y && !fragment.isSunk()){
+                            fragment.setSunk(true);
+                            message(player, "info", "YOU HIT ONE!!");
+                           chatMessage(getCurrentPlayer(), "info", player.getUsername(), "YOU HIT ONE!!");
+                           message(getAlternative(), "notification", "HE HIT YOU IN ("+point[0]+","+point[1]+")");
+                           boolean haswin = checkWinner(getAlternative());
+                           if (haswin){
+                               message(player, "winner", "YOU WIN!!!");
+                               message(getAlternative(), "winner", "YOU LOOSE!!!");
+
+                           }
+                            return;
+                       }
+                   }
+               }
+              message(player, "notification", "YOU MISSED");
+
+    }
+
+    private boolean checkWinner(Player player) {
+        for (Ship ship : player.getStrategy().getShips()) {
+             if (!ship.isSunk()){
+                      return false;
+             }
+        }
+        return true;
     }
 
     private void chatMessage(Player playerTo, String type, String playerFrom, String talk) {
@@ -160,15 +222,16 @@ public class Game {
     }
 
     private void changeTurn() {
-        currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
+        if (currentState == TurnState.ASKING) {
+            currentState = TurnState.ANSWERING;
+        } else {
+            currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
+            currentState = TurnState.ASKING;
+        }
     }
 
-    public boolean hasPlayerOneDefined() {
+    public boolean isPlayerOneDefined() {
         return playerOne != null;
-    }
-
-    public boolean hasPlayerTwoDefined() {
-        return playerTwo != null;
     }
 
     public Player getCurrentPlayer() {
@@ -179,17 +242,27 @@ public class Game {
         return currentPlayer == playerOne ? playerTwo : playerOne;
     }
 
+    public boolean isPlayerTwoDefined() {
+        return playerTwo != null;
+    }
+
+    public void setPlayerB(Player playerB) {
+        this.playerTwo = playerB;
+    }
+
     public String getGameId() {
         return gameId;
     }
 
-    public boolean hasStarted() {
-        return started;
+    public boolean isStart() {
+        return start;
     }
 
     public boolean isEmpty() {
-	//FIXME: Testear esto
-        return currentPlayer == null ? true : false;
+        boolean result = false;
+        if (leavers == 2) result = true;
+        if (leavers == 1 && start == false) result = true;
+        return result;
     }
 
     @Override
@@ -197,8 +270,10 @@ public class Game {
         return "Game{" +
                 "playerOne=" + playerOne +
                 ", playerTwo=" + playerTwo +
-                ", start=" + started +
+                ", start=" + start +
+                ", leavers=" + leavers +
                 '}';
     }
 
+    private enum TurnState {ASKING, ANSWERING}
 }

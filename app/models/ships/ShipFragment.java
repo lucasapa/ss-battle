@@ -10,5 +10,11 @@ public class ShipFragment extends Point{
         super(x,y);
     }
 
+    public boolean isSunk() {
+        return sunk;
+    }
 
+    public void setSunk(boolean sunk) {
+        this.sunk = sunk;
+    }
 }

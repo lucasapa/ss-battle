@@ -23,6 +23,14 @@ public abstract class Ship {
         return vertical;
     }
 
+    public boolean isSunk() {
+        return sunk;
+    }
+
+    public void setSunk(boolean sunk) {
+        this.sunk = sunk;
+    }
+
     public void addFragment(ShipFragment shipFragment) {
         //To change body of created methods use File | Settings | File Templates.
     }

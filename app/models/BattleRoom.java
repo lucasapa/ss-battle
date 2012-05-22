@@ -15,11 +15,11 @@ public class BattleRoom {
 
 	public static void join(String username, WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) {
 		Game lastGame = getLastGame();
-		if (!lastGame.hasPlayerOneDefined()) {
+		if (!lastGame.isPlayerOneDefined()) {
 		    final Player player = new Player(username, out, lastGame.getGameId());
 		    lastGame.setPlayerA(player);
 		    msgInWebSocket(in, player);
-		} else if (!lastGame.hasPlayerTwoDefined()) {
+		} else if (!lastGame.isPlayerTwoDefined()) {
 		    final Player player = new Player(username, out, lastGame.getGameId());
 		    lastGame.setPlayerB(player);
 		    msgInWebSocket(in, player);
@@ -58,12 +58,12 @@ public class BattleRoom {
 		    public void invoke(JsonNode jsonNode) throws Throwable {
 			Game game = getGameById(player.getGameId());
 			String messageType = jsonNode.get("type").asText();
-			if (game.hasStarted()) {
+			if (game.isStart()) {
 			    if (messageType.equals("chat")) {
 				final String talk = jsonNode.get("text").asText();
 				game.chat(player, talk);
-			    } else if (messageType.equals("position")) {
-				final String position = jsonNode.get("text").asText();
+			    } else if (messageType.equals("shoot")) {
+				String []position = jsonNode.get("text").asText().split(",");
 				game.shoot(player, position);
 			    } else {
 		            	//Other "messageTypes" behavior
