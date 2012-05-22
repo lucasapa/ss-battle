@@ -1,7 +1,3 @@
-/**
- * User: Mart0
- * Date: 4/30/12
- */
 var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
 var WSPath = $("#WSocketPath").val();
 var chatSocket = new WS(WSPath);
@@ -13,8 +9,7 @@ function sendMessage(type) {
         {
             type:type,
             text:$("#talk").val(),
-            questionValue:qValue,
-            answer:qAnswer
+            shoot:qValue
         }
     ))
     ;
@@ -46,20 +41,15 @@ function receiveEvent(event) {
     if (data.type == 'info') $(chatLine).addClass('info');
 
     if (data.type == 'ask') {
-        $("#questionPanel").show();
-        $("#answerPanel").hide();
+        $("#shootPanel").show();
     }
     if (data.type == 'winner') {
         $("#winner").show();
-        $("#questionPanel").hide();
-        $("#answerPanel").hide();
+        $("#shootPanel").hide();
     }
-    if (data.type == 'answer') {
-        $("#answerPanel").show();
-    }
+
     if (data.type == 'wait') {
-        $("#questionPanel").hide();
-        $("#answerPanel").hide();
+        $("#shootPanel").hide();
     }
 
     $("span", chatLine).text(data.type);
@@ -80,16 +70,9 @@ function getServerInfo() {
 
 var qValue;
 var qString;
-function askQuestion() {
+function shoot() {
     var shoot = $("#X").val()+","+$("#Y").val();
     qValue = shoot;
     sendMessage("shoot");
 }
-
-var qAnswer;
-function answerQuestion(answer) {
-    qAnswer = answer;
-    sendMessage("answer");
-}
-
 

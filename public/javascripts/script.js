@@ -1,5 +1,3 @@
-/* Author: Team w&w */
-
 function hideLoginForm() {
     var element = document.getElementById("loginPage");
     element.style.display = "none";

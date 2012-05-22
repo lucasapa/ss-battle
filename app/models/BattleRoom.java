@@ -60,11 +60,11 @@ public class BattleRoom {
 			String messageType = jsonNode.get("type").asText();
 			if (game.isStart()) {
 			    if (messageType.equals("chat")) {
-				final String talk = jsonNode.get("text").asText();
-				game.chat(player, talk);
+				    final String talk = jsonNode.get("text").asText();
+				    game.chat(player, talk);
 			    } else if (messageType.equals("shoot")) {
-				String []position = jsonNode.get("text").asText().split(",");
-				game.shoot(player, position);
+				    String []position = jsonNode.get("text").asText().split(",");
+				    game.shoot(player, position);
 			    } else {
 		            	//Other "messageTypes" behavior
 			    }
