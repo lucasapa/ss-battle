@@ -13,6 +13,8 @@ public class Strategy {
 
     private List<Ship> ships;
 
+    private boolean autoShoot;
+
     public Strategy(){
         ships = new ArrayList<Ship>();
         loadShips();
@@ -49,32 +51,45 @@ public class Strategy {
     }
 
 
-    public void setSunk(Ship ship, ShipFragment fragment){
+    public String setSunk(Ship ship, ShipFragment fragment){
 
         boolean shipSunk = true;
+        String toStr = "Shoot{";
 
         for(ShipFragment actual:ship.getFragments()){
             if(actual.getX() == fragment.getX() && actual.getY() == fragment.getY()){
+                toStr += "{\"x\" : \""+fragment.getX()+", \"y\" : \""+fragment.getY()+"\"}}";
                 actual.setSunk(true);
             }
             if(!actual.isSunk()){
+                toStr += "{miss}}";
                 shipSunk = false;
             }
         }
         ship.setSunk(shipSunk);
+        return toStr;
 
     }
 
+    public boolean isAutoShoot() {
+        return autoShoot;
+    }
 
-    public String toString(){
-        String toStr = "";
+    public void setAutoShoot(boolean autoShoot) {
+        this.autoShoot = autoShoot;
+    }
+
+    public String toString() {
+        //Json String
+        String toStr = "Strategy{";
         for(Ship ship: ships){
-            toStr += ship.getName()+"{";
+            toStr += "\""+ship.getName()+"\" : {";
             for(ShipFragment fragment: ship.getFragments()){
-                toStr += "("+fragment.getX()+","+fragment.getY()+")";
+                toStr += "{\"x\" : \""+fragment.getX()+", \"y\" : \""+fragment.getY()+"\"}, ";
             }
             toStr += "}, ";
         }
+        toStr += "}";
         return toStr;
     }
 

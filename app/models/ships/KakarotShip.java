@@ -8,6 +8,6 @@ public class KakarotShip extends Ship{
 
     @Override
     public String getName() {
-        return "Leviathan";
+        return "Kakarot";
     }
 }

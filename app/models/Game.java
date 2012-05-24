@@ -39,11 +39,12 @@ public class Game {
         currentState = TurnState.SHOOTING;
     }
 
-    private String generateDefaultStrategies(Player player) {
+    private void generateDefaultStrategies(Player player) {
         Strategy strategy = new Strategy();
         player.setStrategy(strategy);
 
         for(Ship ship:strategy.getShips()){
+
             while(true){
                 if(generateShipDefaultStrategy(ship,strategy)){
                     break;
@@ -51,14 +52,12 @@ public class Game {
             }
         }
 
-        return strategy.toString();
-
-
+        message(player, "strategy", strategy.toString());
     }
 
     private boolean generateShipDefaultStrategy(Ship ship, Strategy strategy) {
         int shipSize = ship.getSize();
-        final Random random = new Random(11);
+        final Random random = new Random();
         ship.setOrientation(random.nextBoolean());
         ShipFragment center = new ShipFragment(random.nextInt(size), random.nextInt(size));
         if(ship.getOrientation()){
@@ -81,26 +80,40 @@ public class Game {
     public void setPlayerA(Player playerOne) {
         this.playerOne = playerOne;
         message(playerOne, "wait", "Waiting for other player to join.....");
-
-        //
-        String strategyStr = generateDefaultStrategies(this.playerOne);
-        message(playerOne, "wait", strategyStr);
+        generateDefaultStrategies(playerOne);
     }
+
+
+
 
     private void notifyStart() {
         message(getCurrentPlayer(), "start", "Let's play Battleship, You're playing against " + getAlternative().getUsername());
         message(getAlternative(), "start", "Let's play Battleship, You're playing against " + getCurrentPlayer().getUsername());
     }
 
+
+    private void autoShoot(Player player){
+        //String[] position = new String["1.0","2"];
+        //shoot(player,position);
+
+    }
+
     private void notifyTurn() {
         if (currentState == TurnState.SHOOTING) {
-            message(getCurrentPlayer(), "ask", "You shoot !");
+            if(getCurrentPlayer().getStrategy().isAutoShoot()){
+                 message(getCurrentPlayer(), "strategy", "AutoShooting !");
+                 autoShoot(getCurrentPlayer());
+            }else{
+                 message(getCurrentPlayer(), "strategy", "You shoot !");
+            }
             message(getAlternative(), "wait", "Other player's shoot!");
         } else {
             message(getAlternative(), "answer", "Shoot???");
             message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+"");
         }
     }
+
+
     public void leave(Player player) {
         leavers++;
         if (playerOne != null && playerTwo != null) {
@@ -120,27 +133,33 @@ public class Game {
 
     public void shoot(Player player, String []position){
 
-               int y = Integer.parseInt(position[0]);
-               int x = Integer.parseInt(position[1]);
+        if(player == getCurrentPlayer()){
+            int y = Integer.parseInt(position[0]);
+            int x = Integer.parseInt(position[1]);
 
-               for (Ship ship : getAlternative().getStrategy().getShips()){
-                   for (ShipFragment fragment : ship.getFragments()) {
-                       if (fragment.getX()==x && fragment.getY()==y && !fragment.isSunk()){
-                           getAlternative().getStrategy().setSunk(ship,fragment);
-                           message(player, "info", "YOU HIT ONE!!");
-                           message(getAlternative(), "notification", "HE HIT YOU IN ("+position[0]+","+position[1]+")");
-                           boolean haswin = checkWinner(getAlternative());
-                           if (haswin){
-                               message(player, "winner", "YOU WIN!!!");
-                               message(getAlternative(), "winner", "YOU LOOSE!!!");
-                           }
-                           return;
-                       }
-                   }
-               }
+            for (Ship ship : getAlternative().getStrategy().getShips()){
+                for (ShipFragment fragment : ship.getFragments()) {
+                    if (fragment.getX()==x && fragment.getY()==y && !fragment.isSunk()){
+                        String shootStr = getAlternative().getStrategy().setSunk(ship,fragment);
+                        message(player, "shoot-attack", shootStr);
+                        message(getAlternative(), "shoot-defense", shootStr);
+                        boolean haswin = checkWinner(getAlternative());
+                        if (haswin){
+                            message(player, "winner", ""); //TODO: FALTA HANDELEARLO EN EL WSocketServer.js
+                            message(getAlternative(), "looser", "");
+                        }
+                        return;
+                    }
+                }
+            }
 
-              message(player, "info", "YOU MISSED");
-              changeTurn();
+            message(player, "miss", "You missed");
+            changeTurn();
+            notifyTurn();
+
+        }
+
+
 
     }
 
@@ -199,8 +218,7 @@ public class Game {
 
     public void setPlayerB(Player playerB) {
         this.playerTwo = playerB;
-        String strategyStr = generateDefaultStrategies(this.playerTwo);
-        message(playerTwo, "wait", strategyStr);
+        generateDefaultStrategies(playerB);
     }
 
     public String getGameId() {
