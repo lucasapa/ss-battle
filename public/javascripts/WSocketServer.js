@@ -9,7 +9,7 @@ function sendMessage(type) {
         {
             type:type,
             text:$("#talk").val(),
-            shoot:qValue
+            shootValue:qValue
         }
     ))
     ;
@@ -41,17 +41,24 @@ function receiveEvent(event) {
     if (data.type == 'info') $(chatLine).addClass('info');
 
     if (data.type == 'ask') {
-        $("#shootPanel").show();
+        $("#questionPanel").show();
+        $("#answerPanel").hide();
     }
-    if (data.type == 'winner') {
-        $("#winner").show();
-        $("#shootPanel").hide();
+    if (data.type == 'answer') {
+        $("#answerPanel").show();
     }
-
     if (data.type == 'wait') {
-        $("#shootPanel").hide();
+        $("#questionPanel").hide();
+        $("#answerPanel").hide();
     }
-
+    if (data.type == 'my-ask' || data.type == 'my-answer') {
+        $(chatLine).addClass('question');
+        $("#questionPanel").hide();
+        $("#answerPanel").hide();
+    }
+    if (data.type == 'op-ask' || data.type == 'op-answer') {
+        $(chatLine).addClass('question');
+    }
     $("span", chatLine).text(data.type);
     $("p", chatLine).text(data.message);
     $('#messages').append(chatLine)

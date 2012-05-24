@@ -29,7 +29,6 @@ public class Game {
         leavers = 0;
         setRandomTurn();
         notifyStart();
-        generateDefaultStrategies();
         notifyTurn();
     }
 
@@ -40,10 +39,9 @@ public class Game {
         currentState = TurnState.SHOOTING;
     }
 
-    private void generateDefaultStrategies() {
+    private String generateDefaultStrategies(Player player) {
         Strategy strategy = new Strategy();
-        getCurrentPlayer().setStrategy(strategy);
-        getAlternative().setStrategy(strategy);
+        player.setStrategy(strategy);
 
         for(Ship ship:strategy.getShips()){
             while(true){
@@ -53,28 +51,27 @@ public class Game {
             }
         }
 
-
+        return strategy.toString();
 
 
     }
 
     private boolean generateShipDefaultStrategy(Ship ship, Strategy strategy) {
-
-        for(int i=0;i<ship.getFragments().size();i++){
-            ship.setOrientation(Math.random() > 0.5);
-            ShipFragment center = new ShipFragment((int)Math.random()*size, (int)Math.random()*size);
-            if(ship.getOrientation()){
-                for(int j = 0; j<ship.getSize();j++){
-                    if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX(),(int)center.getY()+j))){
-                        return false;
-                    };
-                }
-            }else{
-                for(int j = 0; j<ship.getSize();j++){
-                    if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX()+j,(int)center.getY()))){
-                        return false;
-                    };
-                }
+        int shipSize = ship.getSize();
+        final Random random = new Random(11);
+        ship.setOrientation(random.nextBoolean());
+        ShipFragment center = new ShipFragment(random.nextInt(size), random.nextInt(size));
+        if(ship.getOrientation()){
+            for(int j = 0; j<shipSize;j++){
+                if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX(),(int)center.getY()+j))){
+                    return false;
+                };
+            }
+        }else{
+            for(int j = 0; j<shipSize;j++){
+                if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX()+j,(int)center.getY()))){
+                    return false;
+                };
             }
         }
         return true;
@@ -84,6 +81,10 @@ public class Game {
     public void setPlayerA(Player playerOne) {
         this.playerOne = playerOne;
         message(playerOne, "wait", "Waiting for other player to join.....");
+
+        //
+        String strategyStr = generateDefaultStrategies(this.playerOne);
+        message(playerOne, "wait", strategyStr);
     }
 
     private void notifyStart() {
@@ -96,31 +97,10 @@ public class Game {
             message(getCurrentPlayer(), "ask", "You shoot !");
             message(getAlternative(), "wait", "Other player's shoot!");
         } else {
-            message(getAlternative(), "answer", "Answer the question");
-            message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+" answer");
+            message(getAlternative(), "answer", "Shoot???");
+            message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+"");
         }
     }
-
-    private void ShootCalculation(Player player, String position) {
-        if (position.equalsIgnoreCase("")) {
-            Game.message(player, "mistake", "Not a valid shoot");
-        } else {
-            message(getCurrentPlayer(), "my-ask", position);
-            message(getAlternative(), "op-ask", position);
-        }
-    }
-
-    private void shootCalculation(Player player, String answer) {
-        if (answer.equals("")) {
-            message(player, "mistake", "Please, Choose a valid position");
-        } else {
-            message(getCurrentPlayer(), "op-answer", answer);
-            message(getAlternative(), "my-answer", answer);
-            changeTurn();
-            notifyTurn();
-        }
-    }
-
     public void leave(Player player) {
         leavers++;
         if (playerOne != null && playerTwo != null) {
@@ -138,37 +118,29 @@ public class Game {
         }
     }
 
-    public void shoot(Player player, String position) {
-        if (getAlternative() == player) {
-            shootCalculation(player, position);
-        } else {
-            message(player, "wait", "Not your move!");
-        }
-    }
-
-
     public void shoot(Player player, String []position){
 
-               int x = Integer.getInteger(position[0]);
-               int y = Integer.getInteger(position[1]);
+               int y = Integer.parseInt(position[0]);
+               int x = Integer.parseInt(position[1]);
 
                for (Ship ship : getAlternative().getStrategy().getShips()){
                    for (ShipFragment fragment : ship.getFragments()) {
                        if (fragment.getX()==x && fragment.getY()==y && !fragment.isSunk()){
-                           fragment.setSunk(true);
+                           getAlternative().getStrategy().setSunk(ship,fragment);
                            message(player, "info", "YOU HIT ONE!!");
-                           chatMessage(getCurrentPlayer(), "info", player.getUsername(), "YOU HIT ONE!!");
                            message(getAlternative(), "notification", "HE HIT YOU IN ("+position[0]+","+position[1]+")");
                            boolean haswin = checkWinner(getAlternative());
                            if (haswin){
                                message(player, "winner", "YOU WIN!!!");
                                message(getAlternative(), "winner", "YOU LOOSE!!!");
                            }
-                            return;
+                           return;
                        }
                    }
                }
-              message(player, "notification", "YOU MISSED");
+
+              message(player, "info", "YOU MISSED");
+              changeTurn();
 
     }
 
@@ -227,6 +199,8 @@ public class Game {
 
     public void setPlayerB(Player playerB) {
         this.playerTwo = playerB;
+        String strategyStr = generateDefaultStrategies(this.playerTwo);
+        message(playerTwo, "wait", strategyStr);
     }
 
     public String getGameId() {

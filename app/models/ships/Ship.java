@@ -5,7 +5,6 @@ import java.util.List;
 
 public abstract class Ship {
 
-    private int size;
     private String name;
     private boolean vertical;
     private boolean sunk = false;
@@ -32,7 +31,7 @@ public abstract class Ship {
     }
 
     public void addFragment(ShipFragment shipFragment) {
-        //To change body of created methods use File | Settings | File Templates.
+        fragments.add(shipFragment);
     }
 
     public List<ShipFragment> getFragments() {

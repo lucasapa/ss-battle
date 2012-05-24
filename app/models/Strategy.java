@@ -28,10 +28,12 @@ public class Strategy {
 
     public boolean addShipFragment(Ship ship, ShipFragment fragment){
         for(Ship addedship:ships){
-            for(ShipFragment addedFragment:ship.getFragments()){
-                   if((addedFragment.getX() == fragment.getX()) && (addedFragment.getY() == fragment.getY())){
-                       return false;
-                   }
+            for(int i=0;i<addedship.getFragments().size();i++){
+                if((addedship.getFragments().get(i).getX() == fragment.getX()) &&
+                        (addedship.getFragments().get(i).getY() == fragment.getY())){
+                    int asas = 0;
+                    return false;
+                }
             }
         }
         ship.addFragment(fragment);
@@ -44,6 +46,36 @@ public class Strategy {
 
     public void setShips(List<Ship> ships) {
         this.ships = ships;
+    }
+
+
+    public void setSunk(Ship ship, ShipFragment fragment){
+
+        boolean shipSunk = true;
+
+        for(ShipFragment actual:ship.getFragments()){
+            if(actual.getX() == fragment.getX() && actual.getY() == fragment.getY()){
+                actual.setSunk(true);
+            }
+            if(!actual.isSunk()){
+                shipSunk = false;
+            }
+        }
+        ship.setSunk(shipSunk);
+
+    }
+
+
+    public String toString(){
+        String toStr = "";
+        for(Ship ship: ships){
+            toStr += ship.getName()+"{";
+            for(ShipFragment fragment: ship.getFragments()){
+                toStr += "("+fragment.getX()+","+fragment.getY()+")";
+            }
+            toStr += "}, ";
+        }
+        return toStr;
     }
 
 }
