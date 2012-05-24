@@ -58,7 +58,7 @@ public class Strategy {
 
         for(ShipFragment actual:ship.getFragments()){
             if(actual.getX() == fragment.getX() && actual.getY() == fragment.getY()){
-                toStr += "{\"x\" : \""+fragment.getX()+", \"y\" : \""+fragment.getY()+"\"}}";
+                toStr += "{\"x\" : \""+fragment.getX()+"\", \"y\" : \""+fragment.getY()+"\"}}";
                 actual.setSunk(true);
             }
             if(!actual.isSunk()){
