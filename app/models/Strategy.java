@@ -53,20 +53,20 @@ public class Strategy {
 
     public String setSunk(Ship ship, ShipFragment fragment){
 
-        boolean shipSunk = true;
-        String toStr = "Shoot{";
-
+        boolean fragmentSunk = false;
+        String toStr = "{";
         for(ShipFragment actual:ship.getFragments()){
             if(actual.getX() == fragment.getX() && actual.getY() == fragment.getY()){
                 toStr += "{\"x\" : \""+fragment.getX()+"\", \"y\" : \""+fragment.getY()+"\"}}";
                 actual.setSunk(true);
+                fragmentSunk = true;
+                break;
             }
-            if(!actual.isSunk()){
-                toStr += "{miss}}";
-                shipSunk = false;
-            }
+
         }
-        ship.setSunk(shipSunk);
+        if(!fragmentSunk){
+            toStr += "{miss}}";
+        }
         return toStr;
 
     }
@@ -81,7 +81,7 @@ public class Strategy {
 
     public String toString() {
         //Json String
-        String toStr = "Strategy{";
+        String toStr = "{";
         for(Ship ship: ships){
             toStr += "\""+ship.getName()+"\" : {";
             for(ShipFragment fragment: ship.getFragments()){

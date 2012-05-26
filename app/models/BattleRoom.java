@@ -1,5 +1,7 @@
 package models;
 
+import models.ships.Ship;
+import models.ships.ShipFragment;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.libs.F;
@@ -65,9 +67,23 @@ public class BattleRoom {
 			    } else if (messageType.equals("shoot")) {
                     final String [] position = jsonNode.get("shootValue").asText().split(",");
 				    game.shoot(player, position);
-			    } else {
-		            	//Other "messageTypes" behavior
-			    }
+			    } else if (messageType.equals("strategy")) {
+                    Strategy strategy = new Strategy();
+
+                    for(Ship ship:strategy.getShips()){
+                        JsonNode fragments = jsonNode.get("strategy").get(ship.getName());
+                        for(JsonNode fragment:fragments){
+                            strategy.addShipFragment(ship,
+                                    new ShipFragment(fragment.get("x").asInt(),
+                                            fragment.get("y").asInt()));
+                        }
+                    }
+
+                    player.setStrategy(strategy);
+
+			    } else{
+
+                }
 			} else {
 				//Wait for another player
 			    game.chat(player, "");

@@ -23,6 +23,12 @@ public abstract class Ship {
     }
 
     public boolean isSunk() {
+        boolean sunk = true;
+        for(ShipFragment fragment: fragments){
+            if(!fragment.isSunk()){
+                sunk = false;
+            }
+        }
         return sunk;
     }
 

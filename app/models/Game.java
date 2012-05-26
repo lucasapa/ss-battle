@@ -27,16 +27,38 @@ public class Game {
     void startGame() {
         start = true;
         leavers = 0;
+        currentState = TurnState.WAITING;
+        waitForStrategy();
         setRandomTurn();
         notifyStart();
         notifyTurn();
+    }
+
+    private void waitForStrategy() {
+        message(playerOne, "wait", "Select your strategy..");
+        message(playerTwo, "wait", "Select your strategy..");
+        synchronized (this) {
+            try {
+                this.wait(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(playerOne.getStrategy() == null){
+            generateDefaultStrategies(playerOne);
+        }
+        if(playerTwo.getStrategy() == null){
+            generateDefaultStrategies(playerTwo);
+        }
+
+        currentState = TurnState.SHOOTING;
     }
 
     private void setRandomTurn() {
         Random turnRoller = new Random();
         int roll = turnRoller.nextInt(2) + 1;
         currentPlayer = roll == 1 ? playerOne : playerTwo;
-        currentState = TurnState.SHOOTING;
     }
 
     private void generateDefaultStrategies(Player player) {
@@ -54,6 +76,8 @@ public class Game {
 
         message(player, "strategy", strategy.toString());
     }
+
+
 
     private boolean generateShipDefaultStrategy(Ship ship, Strategy strategy) {
         int shipSize = ship.getSize();
@@ -80,7 +104,15 @@ public class Game {
     public void setPlayerA(Player playerOne) {
         this.playerOne = playerOne;
         message(playerOne, "wait", "Waiting for other player to join.....");
-        generateDefaultStrategies(playerOne);
+    }
+
+
+    public void setStrategyForPlayer(Player player, Strategy strategy){
+
+        player.setStrategy(strategy);
+        if(playerOne.getStrategy() != null && playerTwo.getStrategy() != null){
+            currentState = TurnState.SHOOTING;
+        }
     }
 
 
@@ -107,8 +139,8 @@ public class Game {
                  message(getCurrentPlayer(), "strategy", "You shoot !");
             }
             message(getAlternative(), "wait", "Other player's shoot!");
-        } else {
-            message(getAlternative(), "answer", "Shoot???");
+        } else{
+            message(getAlternative(), "wait", "Wait for" +getCurrentPlayer().getUsername()+"");
             message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+"");
         }
     }
@@ -192,12 +224,7 @@ public class Game {
     }
 
     private void changeTurn() {
-        if (currentState == TurnState.SHOOTING) {
-            currentState = TurnState.WAITING;
-        } else {
-            currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
-            currentState = TurnState.SHOOTING;
-        }
+        currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
     }
 
     public boolean isPlayerOneDefined() {
@@ -218,7 +245,6 @@ public class Game {
 
     public void setPlayerB(Player playerB) {
         this.playerTwo = playerB;
-        generateDefaultStrategies(playerB);
     }
 
     public String getGameId() {
