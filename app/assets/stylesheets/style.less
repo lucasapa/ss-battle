@@ -1,0 +1,544 @@
+/* =============================================================================
+   HTML5 Boilerplate CSS: h5bp.com/css
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; margin: 0; padding: 0; }
+audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+audio:not([controls]) { display: none; }
+[hidden] { display: none; }
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+body { margin: 0; font-size: 1em; line-height: 1.4; }
+
+::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
+::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+
+a { color: #00e; text-decoration: none;}
+a:visited { color: #551a8b; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
+
+abbr[title] { border-bottom: 1px dotted; }
+b, strong { font-weight: bold; }
+blockquote { margin: 1em 40px; }
+dfn { font-style: italic; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+ins { background: #ff9; color: #000; text-decoration: none; }
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+q { quotes: none; }
+q:before, q:after { content: ""; content: none; }
+small { font-size: 85%; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; list-style:  none;}
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+svg:not(:root) { overflow: hidden; }
+
+figure { margin: 0; }
+
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+label { cursor: pointer; }
+legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+button[disabled], input[disabled] { cursor: default; }
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
+input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+textarea { overflow: auto; vertical-align: top; resize: vertical; }
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+.chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
+
+
+
+/* ===== Common CSS ========================================================
+   Author: Team n&n
+   ========================================================================== */
+
+/*Variables*/
+@page-width: 1000px;
+
+/*Colors*/
+@gray-font: #777777;
+@purple-shadow: #3B0B2E;
+@purple: #DF01A5;
+@red: #FF0000;
+@black: #000000;
+@gray-background: #F5F5F5;
+
+/*Functions*/
+.Border-radius(@radius:5px) {
+    -webkit-border-radius:@radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, SANS-SERIF;
+}
+
+body.pinstripe {
+    background: url("/assets/images/background-pinstripe.png") repeat;
+/*background: url("@routes.Assets.at("images/background-pinstripe.png")") repeat;*/
+
+}
+
+.layout {
+    width: @page-width;
+    margin: 0 auto;
+}
+
+#outer_layout {
+    width: 100%;
+    float: left;
+}
+#wrapper {
+    width: @page-width;
+    margin: 0 auto;
+}
+
+.wrapper {
+    position: relative;
+    width: 950px;
+    margin: 0 auto 0 auto;
+    text-align: left;
+}
+
+#inner_wrapper {
+    width: @page-width;
+    float: left;
+    background:  white;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+#header {
+    width: @page-width + 20px;
+    position: relative;
+    text-align: center;
+    background: @black;
+    z-index: 1000;
+    #logo {
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        a:visited, a {
+            color: white;
+            font-size: 64px ;
+            line-height: 73px;
+        }
+    }
+    li {
+        float: left;
+    }
+    li a {
+        display: block;
+    }
+}
+
+#header #nav {
+    width: @page-width + 20px;
+    display: block;
+    position: relative;
+    background: @black;
+    height: 33px;
+    margin-left: -11px;
+    margin-bottom: -2px;
+    border: 1px solid @red;
+    li a {
+        display: block;
+        text-align: center;
+        font-size: 13px;
+        padding: 0 10px;
+        line-height: 33px;
+        font-weight: bold;
+        color: white;
+    }
+    li:first-child {
+        padding-left: 0;
+    }
+}
+
+#wraparound {
+    position: relative;
+    margin: 0 -11px;
+    border: 1px solid @black;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.3);
+    &:before , &:after {
+        content: " ";
+        border-top: 10px solid @red;
+        position: absolute;
+        bottom: -11px;
+    }
+    &:before {
+        border-left: 10px solid transparent;
+        left: 0;
+    }
+    &:after {
+        border-right: 10px solid transparent;
+        right: 0;
+    }
+}
+
+
+footer {
+    width: @page-width;
+    float: left;
+    padding: 5px 0;
+    background: @gray-background;
+    color: @gray-font;
+    font-size: 12px;
+
+    bottom: 0;
+    nav {
+        width: auto;
+        float: left;
+        padding-right: 20px;
+        ul {
+            width: auto;
+            float: left;
+            list-style: none;
+            li {
+                float: left;
+                font: 12px;
+                padding-left: 20px;
+                a , a:visited {
+                    color: @gray-font;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: none;
+                }
+                li:first-child {
+                    padding-left: 0;
+                }
+            }
+        }
+
+    }
+    p {
+        float: right;
+        font: 12px;
+        padding-right: 20px;
+    }
+}
+
+/* ===== Home Page CSS ========================================================
+   Author: Team n&n
+   ========================================================================== */
+#header .wrapper {
+    width : @page-width;
+}
+
+#login {
+    width: 100%;
+    min-height: 768px;
+    background: url("/assets/images/battleship-background.jpg");
+    background-repeat: no-repeat;
+    form {
+        width: 450px;
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        top: 150px;
+        box-shadow: 0 0 10px 10px rgba(0,0,0,0.3);
+        border: 2px solid @black;
+        text-align: right;
+        .Border-radius(5px);
+        label{
+            margin: 8px;
+            font-weight: bold;
+        }
+        legend {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+            font: 1.5em bold;
+            padding: 10px 0;
+            border-bottom: 5px solid @red;
+            background: @black;
+            color: white;
+        }
+        input {
+            padding: 5px 20px;
+            margin: 10px 40px 5px 10px;
+        }
+
+        button {
+            border: 2px solid black;
+            padding: 5px 20px;
+            float: right;
+            margin: 25px 5px 5px 0;
+            background-color: @black;
+            color: white;
+            .Border-radius;
+            font-weight: bold;
+        }
+    }
+
+
+}
+
+/* ===== Board Game CSS ========================================================
+   Author: Team n&n
+   ========================================================================== */
+
+#strategyRoom{
+    width: 100%;
+    min-height: 768px;
+    background: url("/assets/images/batallaNaval.jpg");
+    background-position:50% 50%;
+    background-repeat: no-repeat;
+    font-size: 16px;
+}
+
+#strategyBoard {
+    float: left;
+    margin-left: 50px;
+}
+
+/*TODO add drag & drop, add style*/
+.shipsBoard {
+    color: black;
+    float: right;
+    padding: 40px;
+    background-color: gray;
+    .Border-radius;
+    margin: 50px;
+
+}
+
+.hoverClass{
+    opacity: 0.4;
+}
+
+
+
+/* ===== Board Game CSS ========================================================
+   Author: Team n&n
+   ========================================================================== */
+@chatColor: #F0F8FF;
+@gameChat: #c43c35;
+@infoChat: #00FA9A;
+
+#game{
+    width: 100%;
+    min-height: 768px;
+    background: url("/assets/images/batalla-naval-game.jpg");
+    background-repeat: no-repeat;
+    font-size: 16px;
+}
+
+#myBoard {
+    float: right;
+
+}
+
+
+#opponentBoard {
+    float: left;
+    margin-left: 50px;
+}
+
+.board {
+    margin-top: 20px;
+    width: 40%;
+    div {
+        display: inline-block;
+    }
+    h2 {
+        text-align: center;
+        color: white;
+    }
+}
+
+
+.boardHeader {
+    color: white;
+    margin: 10px;
+}
+
+.sideHeader {
+    width: 20px;
+    padding: 0;
+    color: white;
+}
+
+/* TODO Battleship chat style*/
+.battleshipChat {
+    margin-top: 25px;
+    margin-left: 40px;
+    color: white;
+    float: left;
+    width: 600px;
+
+    border: 4px solid white;
+    .Border-radius;
+    #messages {
+        overflow: auto;
+        height: 250px;
+        .message {
+            p {
+                color: black;
+                margin-left: 5px;
+                display: inline;
+            }
+            #user {
+                background-color : gray;
+                display: inline-block;
+                width: 100px;
+                padding: 10px;
+            }
+        }
+        .chat {
+            background-color: @chatColor;
+            color:white;
+        }
+        .info {
+            background-color: @infoChat;
+        }
+        .game {
+            background-color: @gameChat;
+            color:white;
+        }
+    }
+}
+
+#talk {
+    width: 530px;
+    margin: 5px;
+}
+
+/*TODO add drag & drop, add style*/
+.shipsBoard {
+    color: white;
+    float: right;
+    padding: 40px;
+}
+
+
+.boardBody {
+    background: url("/assets/images/FOG.png");
+    border: 1px solid black;
+    width: 35px;
+    height: 35px;
+    padding: 0px;
+    margin: -3px;
+}
+/* ===== Popups CSS ========================================================
+Author: Team n&n
+========================================================================== */
+
+#message{
+    z-index: 1003;
+    background-color: silver;
+    border: medium solid grey;
+    .Border-radius;
+    display: none;
+    left: 38.5%;
+    padding: 1em;
+    position: fixed;
+    text-align: center;
+    top: 38%;
+    width: 19em;
+    .close > a{
+        left: 321px;
+        position: absolute;
+        top: -20px;
+    }
+}
+
+#popUpBlanket {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    min-height: 943px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+
+/* ===== Drag & Drop CSS ========================================================
+Author: Team n&n
+========================================================================== */
+
+#draggable{
+    background-color: green;
+    border: solid;
+    color: green;
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    padding: 0.5em;
+}
+
+
+/* =============================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+/* Style adjustments for viewports that meet the condition */
+}
+
+/* =============================================================================
+   Non-Semantic Helper Classes
+   ========================================================================== */
+
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; *line-height: 0; }
+.ir br { display: none; }
+.hidden { display: none !important; visibility: hidden; }
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+.invisible { visibility: hidden; }
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+
+/* =============================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
+    a, a:visited { text-decoration: underline; }
+    a[href]:after { content: " (" attr(href) ")"; }
+    abbr[title]:after { content: " (" attr(title) ")"; }
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
+    pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+    thead { display: table-header-group; } /* h5bp.com/t */
+    tr, img { page-break-inside: avoid; }
+    img { max-width: 100% !important; }
+    @page { margin: 0.5cm; }
+    p, h2, h3 { orphans: 3; widows: 3; }
+    h2, h3 { page-break-after: avoid; }
+}
