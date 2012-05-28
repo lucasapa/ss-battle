@@ -39,7 +39,7 @@ public class Game {
         message(playerTwo, "wait", "Select your strategy..");
         synchronized (this) {
             try {
-                this.wait(30000);
+                this.wait(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -81,7 +81,7 @@ public class Game {
 
     private boolean generateShipDefaultStrategy(Ship ship, Strategy strategy) {
         int shipSize = ship.getSize();
-        final Random random = new Random();
+        final Random random = new Random(System.currentTimeMillis());
         ship.setOrientation(random.nextBoolean());
         ShipFragment center = new ShipFragment(random.nextInt(size), random.nextInt(size));
         if(ship.getOrientation()){

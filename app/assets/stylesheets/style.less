@@ -321,6 +321,11 @@ footer {
     margin-right: 0px;
 }
 
+#boards {
+    margin-left:10%;
+    margin-right:10%;
+}
+
 /*TODO add drag & drop, add style*/
 .shipsBoard {
     color: black;
@@ -361,7 +366,6 @@ footer {
 
 #opponentBoard {
     float: left;
-    margin-left: 50px;
 }
 
 .board {
@@ -442,12 +446,17 @@ footer {
 
 
 .boardBody {
-    background: url("/assets/images/FOG.png");
+    background: url("/assets/images/sky.jpg");
     border: 1px solid black;
     width: 35px;
     height: 35px;
     padding: 0px;
     margin: -3px;
+    display-text: none;
+}
+
+.boardBody:hover {
+    background: url("/assets/images/missile.png");
 }
 /* ===== Popups CSS ========================================================
 Author: Team n&n

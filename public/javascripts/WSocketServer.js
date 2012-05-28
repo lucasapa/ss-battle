@@ -3,6 +3,7 @@ var WSPath = $("#WSocketPath").val();
 var chatSocket = new WS(WSPath);
 chatSocket.onmessage = receiveEvent;
 $("#talk").keypress(handleReturnKey);
+$("#opponentBoard .boardBody").click(handleClick);
 
 function sendMessage(type) {
     chatSocket.send(JSON.stringify(
@@ -47,6 +48,9 @@ function receiveEvent(event) {
     if (data.type == 'answer') {
         $("#answerPanel").show();
     }
+    if (data.type == 'strategy') {
+        //DRAW STRATEGY HERE !
+    }
     if (data.type == 'wait') {
         $("#questionPanel").hide();
         $("#answerPanel").hide();
@@ -62,6 +66,13 @@ function receiveEvent(event) {
     $("span", chatLine).text(data.type);
     $("p", chatLine).text(data.message);
     $('#messages').append(chatLine)
+}
+
+function handleClick(e){
+    var position = e.target.innerHTML;
+    qValue = position;
+    sendMessage("shoot");
+    console.log('Atacaste en la posición '+ position);
 }
 
 function handleReturnKey(e) {
