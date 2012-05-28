@@ -53,7 +53,13 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'shoot-attack') {
-        //DRAW STRATEGY HERE !
+
+
+       if(data.message != "miss"){
+            document.getElementById(data.message).parentNode.classList.add("hit")
+       }else{
+
+       }
     }
 
     if (data.type == 'shoot-defense') {
@@ -79,7 +85,7 @@ function receiveEvent(event) {
 }
 
 function handleClick(e){
-    var position = e.target.firstChild.innerHTML;
+    var position = e.target.firstChild.id;
     qValue = position;
     sendMessage("shoot");
     console.log('Atacaste en la posición '+ position);

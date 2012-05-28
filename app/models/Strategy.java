@@ -54,10 +54,10 @@ public class Strategy {
     public String setSunk(Ship ship, ShipFragment fragment){
 
         boolean fragmentSunk = false;
-        String toStr = "{";
+        String toStr = "";
         for(ShipFragment actual:ship.getFragments()){
             if(actual.getX() == fragment.getX() && actual.getY() == fragment.getY()){
-                toStr += "\"x\" : \""+fragment.getX()+"\", \"y\" : \""+fragment.getY()+"\"}";
+                toStr += (int)fragment.getX()+","+(int)fragment.getY();
                 actual.setSunk(true);
                 fragmentSunk = true;
                 break;
@@ -65,7 +65,7 @@ public class Strategy {
 
         }
         if(!fragmentSunk){
-            toStr += "miss}";
+            toStr += "miss";
         }
         return toStr;
 
