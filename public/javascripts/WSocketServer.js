@@ -51,6 +51,16 @@ function receiveEvent(event) {
     if (data.type == 'strategy') {
         //DRAW STRATEGY HERE !
     }
+
+    if (data.type == 'shoot-attack') {
+        //DRAW STRATEGY HERE !
+    }
+
+    if (data.type == 'shoot-defense') {
+        //DRAW STRATEGY HERE !
+    }
+
+
     if (data.type == 'wait') {
         $("#questionPanel").hide();
         $("#answerPanel").hide();
@@ -69,7 +79,7 @@ function receiveEvent(event) {
 }
 
 function handleClick(e){
-    var position = e.target.innerHTML;
+    var position = e.target.firstChild.innerHTML;
     qValue = position;
     sendMessage("shoot");
     console.log('Atacaste en la posición '+ position);

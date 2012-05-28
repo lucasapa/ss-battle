@@ -166,20 +166,22 @@ public class Game {
     public void shoot(Player player, String []position){
 
         if(player == getCurrentPlayer()){
-            int y = Integer.parseInt(position[0]);
-            int x = Integer.parseInt(position[1]);
+            int x = Integer.parseInt(position[0]);
+            int y = Integer.parseInt(position[1]);
 
             for (Ship ship : getAlternative().getStrategy().getShips()){
                 for (ShipFragment fragment : ship.getFragments()) {
                     if (fragment.getX()==x && fragment.getY()==y && !fragment.isSunk()){
                         String shootStr = getAlternative().getStrategy().setSunk(ship,fragment);
-                        message(player, "shoot-attack", shootStr);
+                        message(currentPlayer, "shoot-attack", shootStr);
                         message(getAlternative(), "shoot-defense", shootStr);
                         boolean haswin = checkWinner(getAlternative());
                         if (haswin){
                             message(player, "winner", ""); //TODO: FALTA HANDELEARLO EN EL WSocketServer.js
                             message(getAlternative(), "looser", "");
                         }
+                        changeTurn();
+                        notifyTurn();
                         return;
                     }
                 }

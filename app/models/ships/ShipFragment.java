@@ -8,6 +8,7 @@ public class ShipFragment extends Point{
 
     public ShipFragment(int x, int y){
         super(x,y);
+        sunk = false;
     }
 
     public boolean isSunk() {
