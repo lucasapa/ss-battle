@@ -58,12 +58,14 @@ function receiveEvent(event) {
        if(data.message != "miss"){
             document.getElementById(data.message).parentNode.classList.add("hit")
        }else{
-
+            document.getElementById(qValue).parentNode.classList.add("miss")
        }
     }
 
     if (data.type == 'shoot-defense') {
-        //DRAW STRATEGY HERE !
+        if(data.message != "miss"){
+            document.getElementById(data.message).parentNode.classList.add("hit")
+        }
     }
 
 
