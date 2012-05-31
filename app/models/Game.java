@@ -1,5 +1,6 @@
 package models;
 
+import com.google.gson.Gson;
 import models.ships.Ship;
 import models.ships.ShipFragment;
 import org.codehaus.jackson.node.ObjectNode;
@@ -74,7 +75,10 @@ public class Game {
             }
         }
 
-        message(player, "strategy", strategy.toString());
+        Gson gson = new Gson();
+        String jsonOutput = gson.toJson(strategy);
+        System.out.println(jsonOutput);
+        message(player, "strategy", jsonOutput);
     }
 
 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import models.ships.*;
+import org.codehaus.jackson.JsonNode;
 
 public class Strategy {
 
@@ -68,11 +69,14 @@ public class Strategy {
 
     public String toString() {
         //Json String
+
+
+
         String toStr = "{";
         for(Ship ship: ships){
             toStr += "\""+ship.getName()+"\" : {";
             for(ShipFragment fragment: ship.getFragments()){
-                toStr += "{\"x\" : \""+fragment.getX()+"\", \"y\" : \""+fragment.getY()+"\"}, ";
+                toStr += "{\"x\" : \""+fragment.getX()+"\", \"y\" : \""+fragment.getY()+"\"}";
             }
             toStr += "}, ";
         }

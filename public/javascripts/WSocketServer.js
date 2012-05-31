@@ -11,7 +11,6 @@ function sendMessage(type) {
             type:type,
             text:$("#talk").val(),
             shootValue:qValue,
-            strategyValue:strValue
         }
     ))
     ;
@@ -47,7 +46,7 @@ function sendStrategyWS(type) {
 
     shipsStr["RedRibbon"] = {};
     shipsStr["RedRibbon"][0] = {};
-    shipsStr["RedRibbon"][0]["y"] =  "1";
+    shipsStr["RedRibbon"][0]["x"] =  "1";
     shipsStr["RedRibbon"][0]["y"] =  "5";
 
     shipsStr["NinjaAssassin"] = {};
@@ -94,6 +93,17 @@ function receiveEvent(event) {
         document.getElementById("boards").style.display = "block";
         document.getElementById("strategyBoard").style.display = "none";
         document.getElementById("shipsBoard").style.display = "none";
+
+        var parsedObj = JSON.parse(data.message);
+        var board = document.getElementById("myBoard");
+        var ships = parsedObj.ships;
+        for(i=0; i<ships.length;i++){
+            for(j=0;j<ships[i].fragments.length;j++){
+                document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.classList.add("hit");
+            }
+        }
+
+
     }
 
     if (data.type == 'shoot-attack') {
