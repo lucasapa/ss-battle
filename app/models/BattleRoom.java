@@ -69,10 +69,11 @@ public class BattleRoom {
 				    game.shoot(player, position);
 			    } else if (messageType.equals("strategy")) {
                     Strategy strategy = new Strategy();
-                    String strategyStr = "{\"Leviathan\" : {{\"x\" : \"8.0\", \"y\" : \"1.0\"}, {\"x\" : \"8.0\", \"y\" : \"2.0\"}, {\"x\" : \"8.0\", \"y\" : \"3.0\"}, {\"x\" : \"8.0\", \"y\" : \"4.0\"}, {\"x\" : \"8.0\", \"y\" : \"5.0\"}, }, \"NinjaAssassin\" : {{\"x\" : \"8.0\", \"y\" : \"9.0\"}, }, \"Kakarot\" : {{\"x\" : \"0.0\", \"y\" : \"5.0\"}, {\"x\" : \"0.0\", \"y\" : \"6.0\"}, {\"x\" : \"0.0\", \"y\" : \"7.0\"}, {\"x\" : \"0.0\", \"y\" : \"8.0\"}, }, \"RedRibbon\" : {{\"x\" : \"2.0\", \"y\" : \"7.0\"}, {\"x\" : \"2.0\", \"y\" : \"8.0\"}, }, \"Jackie\" : {{\"x\" : \"2.0\", \"y\" : \"6.0\"}, {\"x\" : \"4.0\", \"y\" : \"1.0\"}, {\"x\" : \"4.0\", \"y\" : \"2.0\"}, {\"x\" : \"4.0\", \"y\" : \"3.0\"}, }, }";
-
+                    JsonNode strategyStr = jsonNode.get("strategyValue");
+                    //String strategyStr = "{\"Leviathan\" : {{\"x\" : \"8.0\", \"y\" : \"1.0\"}, {\"x\" : \"8.0\", \"y\" : \"2.0\"}, {\"x\" : \"8.0\", \"y\" : \"3.0\"}, {\"x\" : \"8.0\", \"y\" : \"4.0\"}, {\"x\" : \"8.0\", \"y\" : \"5.0\"}, }, \"NinjaAssassin\" : {{\"x\" : \"8.0\", \"y\" : \"9.0\"}, }, \"Kakarot\" : {{\"x\" : \"0.0\", \"y\" : \"5.0\"}, {\"x\" : \"0.0\", \"y\" : \"6.0\"}, {\"x\" : \"0.0\", \"y\" : \"7.0\"}, {\"x\" : \"0.0\", \"y\" : \"8.0\"}, }, \"RedRibbon\" : {{\"x\" : \"2.0\", \"y\" : \"7.0\"}, {\"x\" : \"2.0\", \"y\" : \"8.0\"}, }, \"Jackie\" : {{\"x\" : \"2.0\", \"y\" : \"6.0\"}, {\"x\" : \"4.0\", \"y\" : \"1.0\"}, {\"x\" : \"4.0\", \"y\" : \"2.0\"}, {\"x\" : \"4.0\", \"y\" : \"3.0\"}, }, }";
+                    System.out.println(strategyStr.asText());
                     for(Ship ship:strategy.getShips()){
-                        JsonNode fragments = jsonNode.get(ship.getName()); //TODO: Falta mandar un mensaje válido hay q probar
+                        JsonNode fragments = strategyStr.get(ship.getName()); //TODO: Falta mandar un mensaje válido hay q probar
                         for(JsonNode fragment:fragments){
                             System.out.println(ship);
                             System.out.println(fragment.get("x").asInt());
