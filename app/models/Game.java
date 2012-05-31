@@ -172,6 +172,13 @@ public class Game {
                         String shootStr = getAlternative().getStrategy().setSunk(ship,fragment);
                         message(player, "shoot-attack", shootStr);
                         message(getAlternative(), "shoot-defense", shootStr);
+                        message(player, "info", "Hit an enemy ship at: "+shootStr);
+                        message(getAlternative(), "info", "The enemy hit your "+ship.getName()+" ship at: "+shootStr);
+                        if(ship.isSunk()){
+                            message(player, "info", "You sunk an enemy's ship");
+                            message(getAlternative(), "info", "The enemy sunk your "+ship.getName()+" ship.");
+                        }
+
                         boolean haswin = checkWinner(getAlternative());
                         if (haswin){
                             message(player, "winner", ""); //TODO: FALTA HANDELEARLO EN EL WSocketServer.js
@@ -185,7 +192,7 @@ public class Game {
             }
 
             message(player, "miss-attack", x+","+y);
-	    message(getAlternative(), "miss-defense", x+","+y);
+	        message(getAlternative(), "miss-defense", x+","+y);
             changeTurn();
             notifyTurn();
 

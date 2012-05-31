@@ -56,22 +56,22 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'shoot-attack') {
-        document.getElementsByName(data.message)[0].parentNode.classList.add("hit");
-	return;
-    }
-
-    if (data.type == 'miss-attack') {
-        document.getElementsByName(data.message)[0].parentNode.classList.add("miss");
- 	return;
-    }
-
-    if (data.type == 'shoot-defense') {
         document.getElementsByName(data.message)[1].parentNode.classList.add("hit");
 	return;
     }
 
+    if (data.type == 'miss-attack') {
+        document.getElementsByName(data.message)[1].parentNode.classList.add("miss");
+ 	return;
+    }
+
+    if (data.type == 'shoot-defense') {
+        document.getElementsByName(data.message)[2].parentNode.classList.add("hit");
+	return;
+    }
+
     if(data.type == 'miss-defense') {
-	document.getElementsByName(data.message)[1].parentNode.classList.add("miss");
+	document.getElementsByName(data.message)[2].parentNode.classList.add("miss");
 	return;
     }
 
