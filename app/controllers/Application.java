@@ -34,17 +34,6 @@ public class Application extends Controller {
     }
 
     /**
-     * Display the fight room.
-     */
-    public static Result fightRoom(String username) {
-        if (username == null || username.trim().equals("")) {
-            flash("error", "Invalid username.");
-            return redirect(routes.Application.index());
-        }
-        return ok(fightRoom.render(username));
-    }
-
-    /**
      * Display the gaming room.
      */
     public static Result battleRoom(String username) {

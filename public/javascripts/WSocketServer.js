@@ -50,7 +50,9 @@ function receiveEvent(event) {
         $("#answerPanel").show();
     }
     if (data.type == 'strategy') {
-        //DRAW STRATEGY HERE !
+        document.getElementById("boards").style.display = "block";
+        document.getElementById("strategyBoard").style.display = "none";
+        document.getElementById("shipsBoard").style.display = "none";
     }
 
     if (data.type == 'shoot-attack') {

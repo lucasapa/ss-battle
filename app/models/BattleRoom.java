@@ -60,6 +60,26 @@ public class BattleRoom {
 		    public void invoke(JsonNode jsonNode) throws Throwable {
 			Game game = getGameById(player.getGameId());
 			String messageType = jsonNode.get("type").asText();
+            if (messageType.equals("strategy")) {
+                Strategy strategy = new Strategy();
+                JsonNode strategyStr = jsonNode.get("strategyValue");
+                //String strategyStr = "{\"Leviathan\" : {{\"x\" : \"8.0\", \"y\" : \"1.0\"}, {\"x\" : \"8.0\", \"y\" : \"2.0\"}, {\"x\" : \"8.0\", \"y\" : \"3.0\"}, {\"x\" : \"8.0\", \"y\" : \"4.0\"}, {\"x\" : \"8.0\", \"y\" : \"5.0\"}, }, \"NinjaAssassin\" : {{\"x\" : \"8.0\", \"y\" : \"9.0\"}, }, \"Kakarot\" : {{\"x\" : \"0.0\", \"y\" : \"5.0\"}, {\"x\" : \"0.0\", \"y\" : \"6.0\"}, {\"x\" : \"0.0\", \"y\" : \"7.0\"}, {\"x\" : \"0.0\", \"y\" : \"8.0\"}, }, \"RedRibbon\" : {{\"x\" : \"2.0\", \"y\" : \"7.0\"}, {\"x\" : \"2.0\", \"y\" : \"8.0\"}, }, \"Jackie\" : {{\"x\" : \"2.0\", \"y\" : \"6.0\"}, {\"x\" : \"4.0\", \"y\" : \"1.0\"}, {\"x\" : \"4.0\", \"y\" : \"2.0\"}, {\"x\" : \"4.0\", \"y\" : \"3.0\"}, }, }";
+                System.out.println(strategyStr.asText());
+                for(Ship ship:strategy.getShips()){
+                    JsonNode fragments = strategyStr.get(ship.getName()); //TODO: Falta mandar un mensaje válido hay q probar
+                    for(JsonNode fragment:fragments){
+                        System.out.println(ship);
+                        System.out.println(fragment.get("x").asInt());
+                        System.out.println(fragment.get("y").asInt());
+                        //strategy.addShipFragment(ship,
+                        //new ShipFragment(fragment.get("x").asInt(),
+                        //fragment.get("y").asInt()));
+                    }
+                }
+
+                player.setStrategy(strategy);
+            }
+
 			if (game.isStart()) {
 			    if (messageType.equals("chat")) {
 				    final String talk = jsonNode.get("text").asText();
@@ -67,30 +87,8 @@ public class BattleRoom {
 			    } else if (messageType.equals("shoot")) {
                     final String [] position = jsonNode.get("shootValue").asText().split(",");
 				    game.shoot(player, position);
-			    } else if (messageType.equals("strategy")) {
-                    Strategy strategy = new Strategy();
-                    JsonNode strategyStr = jsonNode.get("strategyValue");
-                    //String strategyStr = "{\"Leviathan\" : {{\"x\" : \"8.0\", \"y\" : \"1.0\"}, {\"x\" : \"8.0\", \"y\" : \"2.0\"}, {\"x\" : \"8.0\", \"y\" : \"3.0\"}, {\"x\" : \"8.0\", \"y\" : \"4.0\"}, {\"x\" : \"8.0\", \"y\" : \"5.0\"}, }, \"NinjaAssassin\" : {{\"x\" : \"8.0\", \"y\" : \"9.0\"}, }, \"Kakarot\" : {{\"x\" : \"0.0\", \"y\" : \"5.0\"}, {\"x\" : \"0.0\", \"y\" : \"6.0\"}, {\"x\" : \"0.0\", \"y\" : \"7.0\"}, {\"x\" : \"0.0\", \"y\" : \"8.0\"}, }, \"RedRibbon\" : {{\"x\" : \"2.0\", \"y\" : \"7.0\"}, {\"x\" : \"2.0\", \"y\" : \"8.0\"}, }, \"Jackie\" : {{\"x\" : \"2.0\", \"y\" : \"6.0\"}, {\"x\" : \"4.0\", \"y\" : \"1.0\"}, {\"x\" : \"4.0\", \"y\" : \"2.0\"}, {\"x\" : \"4.0\", \"y\" : \"3.0\"}, }, }";
-                    System.out.println(strategyStr.asText());
-                    for(Ship ship:strategy.getShips()){
-                        JsonNode fragments = strategyStr.get(ship.getName()); //TODO: Falta mandar un mensaje válido hay q probar
-                        for(JsonNode fragment:fragments){
-                            System.out.println(ship);
-                            System.out.println(fragment.get("x").asInt());
-                            System.out.println(fragment.get("y").asInt());
-                            //strategy.addShipFragment(ship,
-                                    //new ShipFragment(fragment.get("x").asInt(),
-                                            //fragment.get("y").asInt()));
-                        }
-                    }
-
-                    player.setStrategy(strategy);
-
-			    } else{
-
-                }
+			    }
 			} else {
-				//Wait for another player
 			    game.chat(player, "");
 			}
 			if (messageType.equals("serverInfo")) {

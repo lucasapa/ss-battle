@@ -5,7 +5,6 @@
 # Home page
 GET     /ss-battle                  controllers.Application.index()
 GET     /ss-battle/room             controllers.Application.battleRoom(username: String ?= null)
-GET     /ss-battle/fight             controllers.Application.fightRoom(username: String ?= null)
 GET     /ss-battle/play             controllers.Application.game(username)
 GET     /ss-battle/about            controllers.Application.aboutGame()
 
