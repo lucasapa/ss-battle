@@ -1,6 +1,5 @@
 package models;
 
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +31,15 @@ public class Strategy {
             for(int i=0;i<addedship.getFragments().size();i++){
                 if((addedship.getFragments().get(i).getX() == fragment.getX()) &&
                         (addedship.getFragments().get(i).getY() == fragment.getY())){
-                    int asas = 0;
                     return false;
                 }
+
             }
         }
+        if(fragment.getX()>=10 || fragment.getY()>=10){
+            return false;
+        }
+
         ship.addFragment(fragment);
         return true;
     }
@@ -69,8 +72,6 @@ public class Strategy {
 
     public String toString() {
         //Json String
-
-
 
         String toStr = "{";
         for(Ship ship: ships){

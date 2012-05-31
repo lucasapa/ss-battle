@@ -99,6 +99,7 @@ function receiveEvent(event) {
         var ships = parsedObj.ships;
         for(i=0; i<ships.length;i++){
             for(j=0;j<ships[i].fragments.length;j++){
+                console.log(ships[i].fragments[j].x+","+ships[i].fragments[j].y);
                 document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.classList.add("hit");
             }
         }

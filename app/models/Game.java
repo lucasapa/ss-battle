@@ -18,6 +18,7 @@ public class Game {
     private boolean start;
     private int leavers;
     private int size;
+    private final Random random = new Random(System.currentTimeMillis());;
 
 
     public Game() {
@@ -68,24 +69,25 @@ public class Game {
 
         for(Ship ship:strategy.getShips()){
 
-            while(true){
-                if(generateShipDefaultStrategy(ship,strategy)){
-                    break;
-                }
+            boolean alreadySet = false;
+            while(!alreadySet){
+                alreadySet = generateShipDefaultStrategy(ship,strategy);
             }
         }
 
+
         Gson gson = new Gson();
         String jsonOutput = gson.toJson(strategy);
-        System.out.println(jsonOutput);
         message(player, "strategy", jsonOutput);
     }
 
 
 
+
+
+
     private boolean generateShipDefaultStrategy(Ship ship, Strategy strategy) {
         int shipSize = ship.getSize();
-        final Random random = new Random(System.currentTimeMillis());
         ship.setOrientation(random.nextBoolean());
         ShipFragment center = new ShipFragment(random.nextInt(size), random.nextInt(size));
         if(ship.getOrientation()){
@@ -114,6 +116,10 @@ public class Game {
 
 
     public void setStrategyForPlayer(Player player, Strategy strategy){
+
+        Gson gson = new Gson();
+        String jsonOutput = gson.toJson(strategy);
+        message(player, "strategy", jsonOutput);
 
         player.setStrategy(strategy);
         if(playerOne.getStrategy() != null && playerTwo.getStrategy() != null){
