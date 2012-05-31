@@ -10,7 +10,8 @@ function sendMessage(type) {
         {
             type:type,
             text:$("#talk").val(),
-            shootValue:qValue
+            shootValue:qValue,
+            strategy:strategyValue
         }
     ))
     ;
@@ -103,11 +104,16 @@ function getServerInfo() {
 }
 
 var qValue;
-var qString;
 function shoot() {
     var shoot = $("#X").val()+","+$("#Y").val();
     qValue = shoot;
     sendMessage("shoot");
+}
+
+function sendStrategy(){
+    var data = "{\"Leviathan\" : {{\"x\" : \"8.0\", \"y\" : \"1.0\"}, {\"x\" : \"8.0\", \"y\" : \"2.0\"}, {\"x\" : \"8.0\", \"y\" : \"3.0\"}, {\"x\" : \"8.0\", \"y\" : \"4.0\"}, {\"x\" : \"8.0\", \"y\" : \"5.0\"}, }, \"NinjaAssassin\" : {{\"x\" : \"8.0\", \"y\" : \"9.0\"}, }, \"Kakarot\" : {{\"x\" : \"0.0\", \"y\" : \"5.0\"}, {\"x\" : \"0.0\", \"y\" : \"6.0\"}, {\"x\" : \"0.0\", \"y\" : \"7.0\"}, {\"x\" : \"0.0\", \"y\" : \"8.0\"}, }, \"RedRibbon\" : {{\"x\" : \"2.0\", \"y\" : \"7.0\"}, {\"x\" : \"2.0\", \"y\" : \"8.0\"}, }, \"Jackie\" : {{\"x\" : \"2.0\", \"y\" : \"6.0\"}, {\"x\" : \"4.0\", \"y\" : \"1.0\"}, {\"x\" : \"4.0\", \"y\" : \"2.0\"}, {\"x\" : \"4.0\", \"y\" : \"3.0\"}, }, }";
+    strategyValue = data;
+    sendMessage("strategy");
 }
 
 
@@ -115,4 +121,5 @@ $("#leviathanship").draggable();
 $("#kaka").droppable({
       drop: function() { alert('dropped'); }
     });
+
 

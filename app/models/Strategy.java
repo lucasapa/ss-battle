@@ -72,7 +72,7 @@ public class Strategy {
         for(Ship ship: ships){
             toStr += "\""+ship.getName()+"\" : {";
             for(ShipFragment fragment: ship.getFragments()){
-                toStr += "{\"x\" : \""+fragment.getX()+", \"y\" : \""+fragment.getY()+"\"}, ";
+                toStr += "{\"x\" : \""+fragment.getX()+"\", \"y\" : \""+fragment.getY()+"\"}, ";
             }
             toStr += "}, ";
         }

@@ -107,9 +107,11 @@ public class Game {
     }
 
 
-    public void setStrategyForPlayer(Player player, Strategy strategy){
 
-        player.setStrategy(strategy);
+
+    public void setStrategyForPlayer(Player player, String strategy){
+
+        //player.setStrategy(strategy);
         if(playerOne.getStrategy() != null && playerTwo.getStrategy() != null){
             currentState = TurnState.SHOOTING;
         }

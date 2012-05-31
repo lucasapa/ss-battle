@@ -2,6 +2,14 @@
 
 @main(username) {
 
+<script>
+     function sendStrategyScript(){
+         sendStrategy();
+         window.location = "@routes.Application.fightRoom(username)";
+     }
+
+</script>
+
 <input id="WSocketPath" value="@routes.Application.game(username).webSocketURL(request)" style="display: none;">
     <div class="page-header">
         <h1>Welcome to the battle room <small>You are playing as <b>@username</b></small></h1>
@@ -9,7 +17,7 @@
 
 <div id="strategyBoard" class="board">
     <h2>Define your Strategy</h2>
-    <a href="@routes.Application.fightRoom(username)"> Ready to Fight</a>
+    <a href="sendStrategyScript()"> Ready to Fight</a>
     <div>
 
         <div class="boardHeader"></div>
@@ -194,35 +202,7 @@
         </div>
 
     </div>
-    <div id="questionPanel">
-         <select id="X">
-             <option value="">Eje Y</option>
-             <option value="0">0</option>
-             <option value="1">1</option>
-             <option value="2">2</option>
-             <option value="3">3</option>
-             <option value="4">4</option>
-             <option value="5">5</option>
-             <option value="6">6</option>
-             <option value="7">7</option>
-             <option value="8">8</option>
-             <option value="9">9</option>
-         </select>
-         <select id="Y">
-                <option value="">Eje X</option>
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-         </select>
-            <button id="askBt" onclick="shoot()">Shoot!</button>
-    </div>
+
 
 <div id="winner">
     <button id="youwin" style="display: none; " onclick="alert('YOU WINN')">YOU WIN!!!</button>
