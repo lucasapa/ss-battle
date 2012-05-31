@@ -144,8 +144,8 @@ public class Game {
 
     private void notifyTurn() {
         if (currentState == TurnState.SHOOTING) {
-            message(getCurrentPlayer(), "strategy", "You shoot !");
-            message(getAlternative(), "wait", "Other player's shoot!");
+            message(getCurrentPlayer(), "info", "You shoot !");
+            message(getAlternative(), "info", "Other player's shoot!");
         } else{
             message(getAlternative(), "wait", "Wait for" +getCurrentPlayer().getUsername()+"");
             message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+"");
