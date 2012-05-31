@@ -132,12 +132,7 @@ public class Game {
 
     private void notifyTurn() {
         if (currentState == TurnState.SHOOTING) {
-            if(getCurrentPlayer().getStrategy().isAutoShoot()){
-                 message(getCurrentPlayer(), "strategy", "AutoShooting !");
-                 autoShoot(getCurrentPlayer());
-            }else{
-                 message(getCurrentPlayer(), "strategy", "You shoot !");
-            }
+            message(getCurrentPlayer(), "strategy", "You shoot !");
             message(getAlternative(), "wait", "Other player's shoot!");
         } else{
             message(getAlternative(), "wait", "Wait for" +getCurrentPlayer().getUsername()+"");
@@ -164,16 +159,16 @@ public class Game {
     }
 
     public void shoot(Player player, String []position){
+	int x = Integer.parseInt(position[0]);
+        int y = Integer.parseInt(position[1]);
 
         if(player == getCurrentPlayer()){
-            int x = Integer.parseInt(position[0]);
-            int y = Integer.parseInt(position[1]);
-
+           
             for (Ship ship : getAlternative().getStrategy().getShips()){
                 for (ShipFragment fragment : ship.getFragments()) {
                     if (fragment.getX()==x && fragment.getY()==y && !fragment.isSunk()){
                         String shootStr = getAlternative().getStrategy().setSunk(ship,fragment);
-                        message(currentPlayer, "shoot-attack", shootStr);
+                        message(player, "shoot-attack", shootStr);
                         message(getAlternative(), "shoot-defense", shootStr);
                         boolean haswin = checkWinner(getAlternative());
                         if (haswin){
@@ -187,7 +182,8 @@ public class Game {
                 }
             }
 
-            message(player, "miss", "You missed");
+            message(player, "miss-attack", x+","+y);
+	    message(getAlternative(), "miss-defense", x+","+y);
             changeTurn();
             notifyTurn();
 

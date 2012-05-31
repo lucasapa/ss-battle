@@ -13,8 +13,6 @@ public class Strategy {
 
     private List<Ship> ships;
 
-    private boolean autoShoot;
-
     public Strategy(){
         ships = new ArrayList<Ship>();
         loadShips();
@@ -64,19 +62,8 @@ public class Strategy {
             }
 
         }
-        if(!fragmentSunk){
-            toStr += "miss";
-        }
         return toStr;
 
-    }
-
-    public boolean isAutoShoot() {
-        return autoShoot;
-    }
-
-    public void setAutoShoot(boolean autoShoot) {
-        this.autoShoot = autoShoot;
     }
 
     public String toString() {

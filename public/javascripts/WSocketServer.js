@@ -53,42 +53,40 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'shoot-attack') {
+        document.getElementsByName(data.message)[0].parentNode.classList.add("hit");
+	return;
+    }
 
-
-       if(data.message != "miss"){
-            document.getElementById(data.message).parentNode.classList.add("hit")
-       }else{
-            document.getElementById(qValue).parentNode.classList.add("miss")
-       }
+    if (data.type == 'miss-attack') {
+        document.getElementsByName(data.message)[0].parentNode.classList.add("miss");
+ 	return;
     }
 
     if (data.type == 'shoot-defense') {
-        if(data.message != "miss"){
-            document.getElementById(data.message).parentNode.classList.add("hit")
-        }
+        document.getElementsByName(data.message)[1].parentNode.classList.add("hit");
+	return;
     }
 
+    if(data.type == 'miss-defense') {
+	document.getElementsByName(data.message)[1].parentNode.classList.add("miss");
+	return;
+    }
 
     if (data.type == 'wait') {
         $("#questionPanel").hide();
         $("#answerPanel").hide();
     }
-    if (data.type == 'my-ask' || data.type == 'my-answer') {
-        $(chatLine).addClass('question');
-        $("#questionPanel").hide();
-        $("#answerPanel").hide();
-    }
-    if (data.type == 'op-ask' || data.type == 'op-answer') {
-        $(chatLine).addClass('question');
-    }
+
     $("span", chatLine).text(data.type);
     $("p", chatLine).text(data.message);
     $('#messages').append(chatLine)
 }
 
 function handleClick(e){
-    var position = e.target.firstChild.id;
+    var position = e.target.firstChild.attributes["name"].value;
     qValue = position;
+
+//Chequear que solo en el opponentBoard se pueda hacer click
     sendMessage("shoot");
     console.log('Atacaste en la posición '+ position);
 }
@@ -111,4 +109,10 @@ function shoot() {
     qValue = shoot;
     sendMessage("shoot");
 }
+
+
+$("#leviathanship").draggable();
+$("#kaka").droppable({
+      drop: function() { alert('dropped'); }
+    });
 
