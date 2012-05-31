@@ -6,6 +6,7 @@ import models.ships.ShipFragment;
 import org.codehaus.jackson.node.ObjectNode;
 import play.libs.Json;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
@@ -68,11 +69,11 @@ public class Game {
         player.setStrategy(strategy);
 
         for(Ship ship:strategy.getShips()){
-
             boolean alreadySet = false;
             while(!alreadySet){
                 alreadySet = generateShipDefaultStrategy(ship,strategy);
             }
+            System.out.println("1");
         }
 
 
@@ -93,12 +94,14 @@ public class Game {
         if(ship.getOrientation()){
             for(int j = 0; j<shipSize;j++){
                 if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX(),(int)center.getY()+j))){
+                    ship.setFragments(new ArrayList<ShipFragment>());
                     return false;
                 };
             }
         }else{
             for(int j = 0; j<shipSize;j++){
                 if(!strategy.addShipFragment(ship, new ShipFragment((int)center.getX()+j,(int)center.getY()))){
+                    ship.setFragments(new ArrayList<ShipFragment>());
                     return false;
                 };
             }
