@@ -18,6 +18,47 @@ function sendMessage(type) {
     $("#talk").val('');
 }
 
+function sendStrategyWS(type) {
+    typeStr = "strategy";
+    var shipsStr = {}
+
+
+    shipsStr["type"] = "strategy";
+    shipsStr["Leviathan"] = {};
+    shipsStr["Leviathan"][0] = {};
+    shipsStr["Leviathan"][1] = {};
+    shipsStr["Leviathan"][0]["x"] = "1";
+    shipsStr["Leviathan"][0]["y"] = "1";
+    shipsStr["Leviathan"][1]["x"] = "1";
+    shipsStr["Leviathan"][1]["y"] = "2";
+
+    shipsStr["Kakarot"] = {};
+    shipsStr["Kakarot"][0] = {};
+    shipsStr["Kakarot"][1] = {};
+    shipsStr["Kakarot"][0]["x"] = "3";
+    shipsStr["Kakarot"][0]["y"] = "4"
+    shipsStr["Kakarot"][1]["x"] = "3";
+    shipsStr["Kakarot"][1]["y"] = "5";
+
+    shipsStr["Jackie"] = {};
+    shipsStr["Jackie"][0] = {};
+    shipsStr["Jackie"][0]["x"] =  "3";
+    shipsStr["Jackie"][0]["y"] =  "2";
+
+    shipsStr["RedRibbon"] = {};
+    shipsStr["RedRibbon"][0] = {};
+    shipsStr["RedRibbon"][0]["y"] =  "1";
+    shipsStr["RedRibbon"][0]["y"] =  "5";
+
+    shipsStr["NinjaAssassin"] = {};
+    shipsStr["NinjaAssassin"][0] = {};
+    shipsStr["NinjaAssassin"][0]["x"] = "8";
+    shipsStr["NinjaAssassin"][0]["y"] =  "5";
+
+
+    chatSocket.send(JSON.stringify(shipsStr));
+}
+
 function receiveEvent(event) {
     var data = JSON.parse(event.data);
 
@@ -112,17 +153,10 @@ function shoot() {
     sendMessage("shoot");
 }
 
-var strValue;
-function sendStrategy(){
-    var data = "{\"Leviathan\" : {{\"x\" : \"8.0\", \"y\" : \"1.0\"}, {\"x\" : \"8.0\", \"y\" : \"2.0\"}, {\"x\" : \"8.0\", \"y\" : \"3.0\"}, {\"x\" : \"8.0\", \"y\" : \"4.0\"}, {\"x\" : \"8.0\", \"y\" : \"5.0\"}, }, \"NinjaAssassin\" : {{\"x\" : \"8.0\", \"y\" : \"9.0\"}, }, \"Kakarot\" : {{\"x\" : \"0.0\", \"y\" : \"5.0\"}, {\"x\" : \"0.0\", \"y\" : \"6.0\"}, {\"x\" : \"0.0\", \"y\" : \"7.0\"}, {\"x\" : \"0.0\", \"y\" : \"8.0\"}, }, \"RedRibbon\" : {{\"x\" : \"2.0\", \"y\" : \"7.0\"}, {\"x\" : \"2.0\", \"y\" : \"8.0\"}, }, \"Jackie\" : {{\"x\" : \"2.0\", \"y\" : \"6.0\"}, {\"x\" : \"4.0\", \"y\" : \"1.0\"}, {\"x\" : \"4.0\", \"y\" : \"2.0\"}, {\"x\" : \"4.0\", \"y\" : \"3.0\"}, }, }";
-    strValue = data;
-    sendMessage("strategy");
-}
 
-
-$("#leviathanship").draggable();
-$("#kaka").droppable({
-      drop: function() { alert('dropped'); }
-    });
+//$("#leviathanship").draggable();
+//$("#kaka").droppable({
+      //drop: function() { alert('dropped'); }
+    //});
 
 
