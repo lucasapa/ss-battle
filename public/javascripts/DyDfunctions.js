@@ -7,7 +7,9 @@
     var JackieShip = 3;
 
     $("#leviathanship, #ninjaassassinship, #kakarotship, #jackieship, #redribbonship").draggable({
-        revert:"invalid"      // esto es para que si no cae en un div que draggable, vuelva a su pos inicial.
+        revert:"invalid" ,  // esto es para que si no cae en un div que draggable, vuelva a su pos inicial.
+        snap:'#strategyBoard .boardBody'     // esta opcion es para que se autoajuste a algun div cdo apoyas el barco.( sirve para que no queden resutlados null)
+
     });
 
     $("#strategyBoard .boardBody").droppable({
@@ -20,4 +22,3 @@
         }
      });
 
-    var strategyBoard = $("#strategyBoard > div")[0];
