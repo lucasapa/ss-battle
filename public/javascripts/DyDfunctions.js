@@ -6,10 +6,10 @@
     var ninjaAssasinShipLenght = 1;
     var ninjaAssasinShipVertical = false;
     var ninjaAssasinGrado=0;
-    var RedRibbonShipLenght = 2;
+    var RedRibbonShipLenght = 3;
     var RedRibbonShipVertical = false;
     var RedRibbonGrado=0;
-    var KakarotShipLenght = 4;
+    var KakarotShipLenght = 5;
     var KakarotShipVertical = false;
     var KakarotShipGrado=0;
     var JackieShipLenght = 3;
