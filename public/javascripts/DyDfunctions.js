@@ -1,10 +1,21 @@
 
     var markedShip;
-    var leviathanShip = 5;
-    var ninjaAssasinShip = 1;
-    var RedRibbonShip = 2;
-    var KakarotShip = 4;
-    var JackieShip = 3;
+    var leviathanShipLenght = 5;       // todabia no lo uso es por si luks es un nepe .
+    var leviathanShipVertical = false;
+    var leviathanShipGrado=0;
+    var ninjaAssasinShipLenght = 1;
+    var ninjaAssasinShipVertical = false;
+    var ninjaAssasinGrado=0;
+    var RedRibbonShipLenght = 2;
+    var RedRibbonShipVertical = false;
+    var RedRibbonGrado=0;
+    var KakarotShipLenght = 4;
+    var KakarotShipVertical = false;
+    var KakarotShipGrado=0;
+    var JackieShipLenght = 3;
+    var JackieShipVertical = false;
+    var JackieShipGrado=0;
+
 
     $("#leviathanship, #ninjaassassinship, #kakarotship, #jackieship, #redribbonship").draggable({
         revert:"invalid" ,  // esto es para que si no cae en un div que draggable, vuelva a su pos inicial.
@@ -14,11 +25,86 @@
 
     $("#strategyBoard .boardBody").droppable({
         over: function (event, ui) {
-            var markedShip = $(ui.draggable).attr('id');
+             markedShip = $(ui.draggable).attr('id');
             $(this).removeClass("boardBody ui-droppable").addClass(markedShip);
         },
         out: function() {
             $(this).removeClass(markedShip).addClass("boardBody ui-droppable");
         }
      });
+
+
+
+    $("#leviathanship, #ninjaassassinship, #kakarotship, #jackieship, #redribbonship").rotate({
+        bind:{
+            click:function () {
+                if ($(this).attr("name") == "leviathanship"){
+                    if (leviathanShipVertical == false){
+                        leviathanShipVertical = true;
+                        leviathanShipGrado=90;
+                        $(this).rotate({ animateTo:90})
+                    }
+                    else {
+                        leviathanShipVertical = false;
+                        leviathanShipGrado=0;
+                        $(this).rotate({ animateTo:0})
+                    }
+
+                }
+                if ($(this).attr("name") == "ninjaassassinship"){
+                    if (ninjaAssasinShipVertical == false){
+                        ninjaAssasinShipVertical = true;
+                        ninjaAssasinGrado=90;
+                        $(this).rotate({ animateTo:90})
+                    }
+                    else {
+                        ninjaAssasinShipVertical = false;
+                        ninjaAssasinGrado=0;
+                        $(this).rotate({ animateTo:0})
+                    }
+
+                }
+                if ($(this).attr("name") == "kakarotship"){
+                    if (KakarotShipVertical == false){
+                        KakarotShipVertical = true;
+                        KakarotShipGrado=90;
+                        $(this).rotate({ animateTo:90})
+                    }
+                    else {
+                        KakarotShipVertical = false;
+                        KakarotShipGrado=0;
+                        $(this).rotate({ animateTo:0})
+                    }
+
+                }
+                if ($(this).attr("name") == "jackieship"){
+                    if (JackieShipVertical == false){
+                        JackieShipVertical = true;
+                        JackieShipGrado=90;
+                        $(this).rotate({ animateTo:90})
+                    }
+                    else {
+                        JackieShipVertical = false;
+                        JackieShipGrado=0;
+                        $(this).rotate({ animateTo:0})
+                    }
+
+                }
+                if ($(this).attr("name") == "redribbonship"){
+                    if (RedRibbonShipVertical == false){
+                        RedRibbonShipVertical = true;
+                        RedRibbonGrado=90;
+                        $(this).rotate({ animateTo:90})
+                    }
+                    else {
+                        RedRibbonShipVertical = false;
+                        RedRibbonGrado=0;
+                        $(this).rotate({ animateTo:0})
+                    }
+
+                }
+            }
+        }
+
+    });
 

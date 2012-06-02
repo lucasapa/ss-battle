@@ -26,12 +26,15 @@ function parseBoard(){
     var jackiePoss = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value;
     var redribbonPoss = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value;
 
-    var strategyBoard = {};
+    var strategyBoard = {};   // aca tenes todas las posiciones centrales de todos los ships.
     strategyBoard["leviathanPoss"] = leviathanPoss;
     strategyBoard["ninjaassassinPoss"] = ninjaassassinPoss;
     strategyBoard["kakarotPoss"] = kakarotPoss;
     strategyBoard["jackiePoss"] = jackiePoss;
     strategyBoard["redribbonPoss"] = redribbonPoss;
+
+    // usando KakarotShipVertical te da el boolean de si es vertical o horizontal. con estos datos, podes mandar a el server
+    // y aprovechar tu codigo anterior para no repetirno 2 veces.
 
     jQuery.each(strategyBoard, function(key,value){
 
