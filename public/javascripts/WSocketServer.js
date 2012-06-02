@@ -17,7 +17,32 @@ function sendMessage(type) {
     $("#talk").val('');
 }
 
+function parseBoard(){
+
+
+    var leviathanPoss = document.getElementsByClassName("leviathanship")[0].firstChild.attributes.name.value;
+    var ninjaassassinPoss = document.getElementsByClassName("ninjaassassinship")[0].firstChild.attributes.name.value;
+    var kakarotPoss = document.getElementsByClassName("kakarotship")[0].firstChild.attributes.name.value;
+    var jackiePoss = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value;
+    var redribbonPoss = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value;
+
+    var strategyBoard = {};
+    strategyBoard["leviathanPoss"] = leviathanPoss;
+    strategyBoard["ninjaassassinPoss"] = ninjaassassinPoss;
+    strategyBoard["kakarotPoss"] = kakarotPoss;
+    strategyBoard["jackiePoss"] = jackiePoss;
+    strategyBoard["redribbonPoss"] = redribbonPoss;
+
+    jQuery.each(strategyBoard, function(key,value){
+
+    alert(value);
+
+    });
+
+}
+
 function sendStrategyWS(type) {
+    parseBoard();
     typeStr = "strategy";
     var shipsStr = {}
 
