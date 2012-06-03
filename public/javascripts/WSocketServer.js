@@ -5,6 +5,13 @@ chatSocket.onmessage = receiveEvent;
 $("#talk").keypress(handleReturnKey);
 $("#opponentBoard .boardBody").click(handleClick);
 
+var leviathanPoss;
+var ninjaassassinPoss;
+var kakarotPoss;
+var jackiePoss;
+var redribbonPoss;
+var shipsStr;
+
 function sendMessage(type) {
     chatSocket.send(JSON.stringify(
         {
@@ -19,70 +26,59 @@ function sendMessage(type) {
 
 function parseBoard(){
 
-
-    var leviathanPoss = document.getElementsByClassName("leviathanship")[0].firstChild.attributes.name.value;
-    var ninjaassassinPoss = document.getElementsByClassName("ninjaassassinship")[0].firstChild.attributes.name.value;
-    var kakarotPoss = document.getElementsByClassName("kakarotship")[0].firstChild.attributes.name.value;
-    var jackiePoss = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value;
-    var redribbonPoss = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value;
-
-    var strategyBoard = {};   // aca tenes todas las posiciones centrales de todos los ships.
-    strategyBoard["leviathanPoss"] = leviathanPoss;
-    strategyBoard["ninjaassassinPoss"] = ninjaassassinPoss;
-    strategyBoard["kakarotPoss"] = kakarotPoss;
-    strategyBoard["jackiePoss"] = jackiePoss;
-    strategyBoard["redribbonPoss"] = redribbonPoss;
-
-    // usando KakarotShipVertical te da el boolean de si es vertical o horizontal. con estos datos, podes mandar a el server
-    // y aprovechar tu codigo anterior para no repetirno 2 veces.
-
-    jQuery.each(strategyBoard, function(key,value){
-
-    alert(value);
-
-    });
+    leviathanPoss = document.getElementsByClassName("leviathanship")[0].firstChild.attributes.name.value.split(",");
+    ninjaassassinPoss = document.getElementsByClassName("ninjaassassinship")[0].firstChild.attributes.name.value.split(",");
+    kakarotPoss = document.getElementsByClassName("kakarotship")[0].firstChild.attributes.name.value.split(",");
+    jackiePoss = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value.split(",");
+    redribbonPoss = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value.split(",");
+    createStrategy();
 
 }
 
-function sendStrategyWS(type) {
-    parseBoard();
+function createStrategy(){
+
     typeStr = "strategy";
-    var shipsStr = {}
+    shipsStr = {}
+    shipsStr["type"] = "strategy"
+
+    calculateAndCreate("Leviathan",leviathanShipLenght,leviathanShipVertical,leviathanPoss);
+    calculateAndCreate("Kakarot",KakarotShipLenght,KakarotShipVertical,kakarotPoss);
+    calculateAndCreate("Jackie",JackieShipLenght,JackieShipVertical,jackiePoss);
+    calculateAndCreate("RedRibbon",RedRibbonShipLenght,RedRibbonShipVertical,redribbonPoss);
+    calculateAndCreate("NinjaAssassin",ninjaAssasinShipLenght,ninjaAssasinShipVertical,ninjaassassinPoss);
+
+}
+
+function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
+
+    var InicioDelBarco = ShipLength-((ShipLength/2).toString().split(".")[0]-1); // formula para sacra la pimera posicion
+                                                                                // del barco busco (la mitad - 1)
+
+if(ShipVertical==false){  //se mueve Y
+
+    for (var i=0;i<=ShipLength;i=i+1)
+    {
+        shipsStr[ShipName] = {};
+        shipsStr[ShipName][i] = {};
+        shipsStr[ShipName][i]["x"] = ShipCenter[0] ;  //shipCenter es un arreglo con las posiciones x e y.
+        shipsStr[ShipName][i]["y"] = ShipCenter[1]+i - InicioDelBarco;
+    }
+}
+
+if(ShipVertical==false){  //se mueve X
+    for (var i=0;i<=ShipLength;i=i+1)
+        {
+            shipsStr[ShipName] = {};
+            shipsStr[ShipName][i] = {};
+            shipsStr[ShipName][i]["x"] = ShipCenter[1]+i - InicioDelBarco ;  //shipCenter es un arreglo con las posiciones x e y.
+            shipsStr[ShipName][i]["y"] = ShipCenter[0];
+        }
+    }
+
+}
 
 
-    shipsStr["type"] = "strategy";
-    shipsStr["Leviathan"] = {};
-    shipsStr["Leviathan"][0] = {};
-    shipsStr["Leviathan"][1] = {};
-    shipsStr["Leviathan"][0]["x"] = "1";
-    shipsStr["Leviathan"][0]["y"] = "1";
-    shipsStr["Leviathan"][1]["x"] = "1";
-    shipsStr["Leviathan"][1]["y"] = "2";
-
-    shipsStr["Kakarot"] = {};
-    shipsStr["Kakarot"][0] = {};
-    shipsStr["Kakarot"][1] = {};
-    shipsStr["Kakarot"][0]["x"] = "3";
-    shipsStr["Kakarot"][0]["y"] = "4"
-    shipsStr["Kakarot"][1]["x"] = "3";
-    shipsStr["Kakarot"][1]["y"] = "5";
-
-    shipsStr["Jackie"] = {};
-    shipsStr["Jackie"][0] = {};
-    shipsStr["Jackie"][0]["x"] =  "3";
-    shipsStr["Jackie"][0]["y"] =  "2";
-
-    shipsStr["RedRibbon"] = {};
-    shipsStr["RedRibbon"][0] = {};
-    shipsStr["RedRibbon"][0]["x"] =  "1";
-    shipsStr["RedRibbon"][0]["y"] =  "5";
-
-    shipsStr["NinjaAssassin"] = {};
-    shipsStr["NinjaAssassin"][0] = {};
-    shipsStr["NinjaAssassin"][0]["x"] = "8";
-    shipsStr["NinjaAssassin"][0]["y"] =  "5";
-
-
+function sendStrategyWS(type) {
     chatSocket.send(JSON.stringify(shipsStr));
 }
 
