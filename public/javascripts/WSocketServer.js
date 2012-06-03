@@ -31,11 +31,11 @@ function parseBoard(){
     kakarotPoss = document.getElementsByClassName("kakarotship")[0].firstChild.attributes.name.value.split(",");
     jackiePoss = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value.split(",");
     redribbonPoss = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value.split(",");
-    createStrategy();
+    sendStrategyWS();
 
 }
 
-function createStrategy(){
+function sendStrategyWS(){
 
     typeStr = "strategy";
     shipsStr = {}
@@ -46,6 +46,8 @@ function createStrategy(){
     calculateAndCreate("Jackie",JackieShipLenght,JackieShipVertical,jackiePoss);
     calculateAndCreate("RedRibbon",RedRibbonShipLenght,RedRibbonShipVertical,redribbonPoss);
     calculateAndCreate("NinjaAssassin",ninjaAssasinShipLenght,ninjaAssasinShipVertical,ninjaassassinPoss);
+
+    chatSocket.send(JSON.stringify(shipsStr));
 
 }
 
@@ -77,10 +79,6 @@ if(ShipVertical==false){  //se mueve X
 
 }
 
-
-function sendStrategyWS(type) {
-    chatSocket.send(JSON.stringify(shipsStr));
-}
 
 function receiveEvent(event) {
     var data = JSON.parse(event.data);
