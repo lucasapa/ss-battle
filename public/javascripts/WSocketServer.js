@@ -37,6 +37,8 @@ function parseBoard(){
 
 function sendStrategyWS(){
 
+
+
     typeStr = "strategy";
     shipsStr = {}
     shipsStr["type"] = "strategy"
