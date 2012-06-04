@@ -17,7 +17,7 @@ function sendMessage(type) {
         {
             type:type,
             text:$("#talk").val(),
-            shootValue:qValue,
+            shootValue:qValue
         }
     ))
     ;
@@ -58,24 +58,27 @@ function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
     var InicioDelBarco = ShipLength-((ShipLength/2).toString().split(".")[0]-1); // formula para sacra la pimera posicion
                                                                                 // del barco busco (la mitad - 1)
 
-if(ShipVertical==false){  //se mueve Y
-
-    for (var i=0;i<=ShipLength;i=i+1)
+if(ShipVertical==true){  //se mueve Y
+    shipsStr[ShipName] = {};
+    for (var i=0;i<ShipLength;i=i+1)
     {
-        shipsStr[ShipName] = {};
+
         shipsStr[ShipName][i] = {};
-        shipsStr[ShipName][i]["x"] = ShipCenter[0] ;  //shipCenter es un arreglo con las posiciones x e y.
-        shipsStr[ShipName][i]["y"] = ShipCenter[1]+i - InicioDelBarco;
+        shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[0]) ;  //shipCenter es un arreglo con las posiciones x e y.
+        shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[1]+i - InicioDelBarco);
+        console.log(parseInt(ShipCenter[1]));
     }
 }
 
 if(ShipVertical==false){  //se mueve X
-    for (var i=0;i<=ShipLength;i=i+1)
+    shipsStr[ShipName] = {};
+    for (var i=0;i<ShipLength;i=i+1)
         {
-            shipsStr[ShipName] = {};
+
             shipsStr[ShipName][i] = {};
-            shipsStr[ShipName][i]["x"] = ShipCenter[1]+i - InicioDelBarco ;  //shipCenter es un arreglo con las posiciones x e y.
-            shipsStr[ShipName][i]["y"] = ShipCenter[0];
+            shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[1]+i - InicioDelBarco);  //shipCenter es un arreglo con las posiciones x e y.
+            console.log(parseInt(ShipCenter[1]));
+            shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[0]);
         }
     }
 
@@ -124,7 +127,7 @@ function receiveEvent(event) {
         for(i=0; i<ships.length;i++){
             for(j=0;j<ships[i].fragments.length;j++){
                 console.log(ships[i].fragments[j].x+","+ships[i].fragments[j].y);
-                document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.classList.add("hit");
+                document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.classList.add("static");
             }
         }
 
