@@ -57,9 +57,9 @@ function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
 
     var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
                                                                                 // del barco busco (la mitad - 1)
-
-if(ShipVertical==false){  //se mueve Y
     shipsStr[ShipName] = {};
+
+    if(ShipVertical==false){  //se mueve Y
     for (var i=0;i<ShipLength;i=i+1)
     {
 
