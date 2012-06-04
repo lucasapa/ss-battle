@@ -76,9 +76,9 @@ if(ShipVertical==true){  //se mueve X
         {
 
             shipsStr[ShipName][i] = {};
-            shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[1])+i - InicioDelBarco;  //shipCenter es un arreglo con las posiciones x e y.
+            shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[0])+i - InicioDelBarco;  //shipCenter es un arreglo con las posiciones x e y.
             console.log(parseInt(ShipCenter[1]));
-            shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[0]);
+            shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[1]);
         }
     }
 
