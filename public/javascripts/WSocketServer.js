@@ -71,7 +71,6 @@ if(ShipVertical==false){  //se mueve Y
 }
 
 if(ShipVertical==true){  //se mueve X
-    shipsStr[ShipName] = {};
     for (var i=0;i<ShipLength;i=i+1)
         {
 
