@@ -5,8 +5,8 @@
 <input id="WSocketPath" value="@routes.Application.game(username).webSocketURL(request)" style="display: none;">
 
 <div class="page-header">
-        <h1>Welcome to the battle room <small>You are playing as <b>@username</b></small></h1>
-    </div>
+    <h1>Welcome to the battle room <small>You are playing as <b>@username</b></small></h1>
+</div>
 
 <div id="strategyBoard" class="board">
     <h2>Define your Strategy</h2>
@@ -477,7 +477,7 @@
 
 <div id="shipsBoard" class="shipsBoard"> The Boats
     <div class="Ship"> <p>Leviathan Ship: </p>
-        <div><img  src="/assets/images/ships/leviathanship.png"  id="leviathanship" name="leviathanship" width="175px" height="35px"/></div>
+        <div><img  src="/assets/images/ships/leviathanship.png"   id="leviathanship" name="leviathanship" width="175px" height="35px"/></div>
     </div>
     <div class="Ship"> <p>Ninja Assassin Ship: </p>
         <div><img  src="/assets/images/ships/ninjaassassinship.png"  name="ninjaassassinship" id="ninjaassassinship" width="35px" height="35px"/></div>
@@ -495,19 +495,19 @@
 </div>
 
 <div id="onError" class="alert-message error">
-        <p>
-            <strong>Oops!</strong> <span></span>
-        </p>
+    <p>
+        <strong>Oops!</strong> <span></span>
+    </p>
 </div>
-    
-    <div id="onChat" class="row">
-        <div class="span10" id="main">
-            <div id="messages">
-            </div>
-            <textarea id="talk"></textarea>
-        </div>
 
+<div id="onChat" class="row">
+    <div class="span10" id="main">
+        <div id="messages">
+        </div>
+        <textarea id="talk"></textarea>
     </div>
+
+</div>
 
 
 <div id="winner">
@@ -521,4 +521,3 @@
 <script src="@routes.Assets.at("javascripts/jquery.chained.js")"></script>
 <script src="@routes.Assets.at("javascripts/DyDfunctions.js")"></script>
 <script src="@routes.Assets.at("javascripts/WSocketServer.js")"></script>
-}
