@@ -58,7 +58,7 @@ function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
     var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
                                                                                 // del barco busco (la mitad - 1)
 
-if(ShipVertical==true){  //se mueve Y
+if(ShipVertical==false){  //se mueve Y
     shipsStr[ShipName] = {};
     for (var i=0;i<ShipLength;i=i+1)
     {
@@ -70,7 +70,7 @@ if(ShipVertical==true){  //se mueve Y
     }
 }
 
-if(ShipVertical==false){  //se mueve X
+if(ShipVertical==true){  //se mueve X
     shipsStr[ShipName] = {};
     for (var i=0;i<ShipLength;i=i+1)
         {
@@ -130,6 +130,7 @@ function receiveEvent(event) {
                 document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.classList.add("static");
             }
         }
+        return;
 
 
     }
@@ -190,11 +191,5 @@ function shoot() {
     qValue = shoot;
     sendMessage("shoot");
 }
-
-
-//$("#leviathanship").draggable();
-//$("#kaka").droppable({
-      //drop: function() { alert('dropped'); }
-    //});
 
 
