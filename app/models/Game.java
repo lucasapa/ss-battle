@@ -138,13 +138,6 @@ public class Game {
         message(getAlternative(), "start", "Let's play Battleship, You're playing against " + getCurrentPlayer().getUsername());
     }
 
-
-    private void autoShoot(Player player){
-        //String[] position = new String["1.0","2"];
-        //shoot(player,position);
-
-    }
-
     private void notifyTurn() {
         if (currentState == TurnState.SHOOTING) {
             message(getCurrentPlayer(), "info", "You shoot !");
@@ -162,6 +155,13 @@ public class Game {
             Player notQuitter = isCurrent(player) ? getAlternative() : getCurrentPlayer();
             message(notQuitter, "leave", "Other played left the game!");
         }
+        if(player == playerOne){
+            playerOne = null;
+        }else{
+            playerTwo = null;
+        }
+
+
     }
 
     public void chat(Player player, String talk) {
@@ -276,10 +276,11 @@ public class Game {
     }
 
     public boolean isEmpty() {
-        boolean result = false;
-        if (leavers == 2) result = true;
-        if (leavers == 1 && start == false) result = true;
-        return result;
+        if(playerOne == null && playerTwo == null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
