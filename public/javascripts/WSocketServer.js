@@ -124,7 +124,7 @@ function receiveEvent(event) {
         for(i=0; i<ships.length;i++){
             for(j=0;j<ships[i].fragments.length;j++){
                 console.log(ships[i].fragments[j].x+","+ships[i].fragments[j].y);
-                document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.classList.add("static");
+                document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.className = "static";
             }
         }
         return;
@@ -133,22 +133,22 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'shoot-attack') {
-        document.getElementsByName(data.message)[1].parentNode.classList.add("hit");
+        document.getElementsByName(data.message)[1].parentNode.className = "hit";
 	return;
     }
 
     if (data.type == 'miss-attack') {
-        document.getElementsByName(data.message)[1].parentNode.classList.add("miss");
+        document.getElementsByName(data.message)[1].parentNode.className = "miss";
  	return;
     }
 
     if (data.type == 'shoot-defense') {
-        document.getElementsByName(data.message)[2].parentNode.classList.add("hit");
+        document.getElementsByName(data.message)[2].parentNode.className = "hit";
 	return;
     }
 
     if(data.type == 'miss-defense') {
-	document.getElementsByName(data.message)[2].parentNode.classList.add("miss");
+	document.getElementsByName(data.message)[2].parentNode.className = "miss";
 	return;
     }
 
@@ -159,7 +159,7 @@ function receiveEvent(event) {
 
     $("span", chatLine).text(data.type);
     $("p", chatLine).text(data.message);
-    $('#messages').append(chatLine)
+    $('#messages').append(chatLine);
 }
 
 function handleClick(e){

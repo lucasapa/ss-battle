@@ -24,12 +24,16 @@
     });
 
     $("#strategyBoard .boardBody").droppable({
-        over: function (event, ui) {
+        drop: function (event, ui) {
              markedShip = $(ui.draggable).attr('id');
             $(this).removeClass("boardBody ui-droppable").addClass(markedShip);
         },
         out: function() {
-            $(this).removeClass(markedShip).addClass("boardBody ui-droppable");
+            if($(this)[0].className != markedShip && $(this)[0].className != "boardBody ui-droppable"){
+
+            }else{
+                $(this).removeClass(markedShip).addClass("boardBody ui-droppable");
+            }
         }
      });
 
