@@ -17,7 +17,6 @@ public class Game {
     private Player currentPlayer;
     private TurnState currentState;
     private boolean start;
-    private int leavers;
     private int size;
     private final Random random = new Random(System.currentTimeMillis());;
 
@@ -29,7 +28,6 @@ public class Game {
 
     void startGame() {
         start = true;
-        leavers = 0;
         currentState = TurnState.WAITING;
         waitForStrategy();
         setRandomTurn();
@@ -150,7 +148,6 @@ public class Game {
 
 
     public void leave(Player player) {
-        leavers++;
         if (playerOne != null && playerTwo != null) {
             Player notQuitter = isCurrent(player) ? getAlternative() : getCurrentPlayer();
             message(notQuitter, "leave", "Other played left the game!");
@@ -289,7 +286,6 @@ public class Game {
                 "playerOne=" + playerOne +
                 ", playerTwo=" + playerTwo +
                 ", start=" + start +
-                ", leavers=" + leavers +
                 '}';
     }
 
