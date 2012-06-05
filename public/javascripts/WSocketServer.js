@@ -106,13 +106,6 @@ function receiveEvent(event) {
     if (data.type == 'leave') $(chatLine).addClass('leave');
     if (data.type == 'info') $(chatLine).addClass('info');
 
-    if (data.type == 'ask') {
-        $("#questionPanel").show();
-        $("#answerPanel").hide();
-    }
-    if (data.type == 'answer') {
-        $("#answerPanel").show();
-    }
     if (data.type == 'strategy') {
         document.getElementById("boards").style.display = "block";
         document.getElementById("strategyBoard").style.display = "none";
