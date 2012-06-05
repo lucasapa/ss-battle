@@ -56,10 +56,10 @@ function sendStrategyWS(){
 function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
 
     var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
-                                                                                // del barco busco (la mitad - 1)
+                                                                                // del barco busco (la mitad )
     shipsStr[ShipName] = {};
 
-    if(ShipVertical==false){  //se mueve Y
+    if(ShipVertical==true){  //se mueve Y
     for (var i=0;i<ShipLength;i=i+1)
     {
 
@@ -69,7 +69,7 @@ function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
     }
 }
 
-if(ShipVertical==true){  //se mueve X
+if(ShipVertical==false){  //se mueve X
     for (var i=0;i<ShipLength;i=i+1)
         {
 
