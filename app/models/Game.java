@@ -114,6 +114,14 @@ public class Game {
     }
 
 
+    public Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public void setPlayerOne(Player playerOne) {
+        this.playerOne = playerOne;
+    }
+
 
 
     public void setStrategyForPlayer(Player player, Strategy strategy){

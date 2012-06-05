@@ -21,7 +21,7 @@ public class BattleRoom {
 		    final Player player = new Player(username, out, lastGame.getGameId());
 		    lastGame.setPlayerA(player);
 		    msgInWebSocket(in, player);
-		} else if (!lastGame.isPlayerTwoDefined()) {
+		} else if (!lastGame.isPlayerTwoDefined() && username != lastGame.getPlayerOne().getUsername()) {
 		    final Player player = new Player(username, out, lastGame.getGameId());
 		    lastGame.setPlayerB(player);
 		    msgInWebSocket(in, player);
