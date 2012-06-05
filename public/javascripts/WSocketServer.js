@@ -56,7 +56,7 @@ function sendStrategyWS(){
 function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
 
     var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
-                                                                                // del barco busco (la mitad )
+                                                                                // del barco busco (la mitad)
     shipsStr[ShipName] = {};
 
     if(ShipVertical==true){  //se mueve Y
@@ -64,8 +64,8 @@ function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
     {
 
         shipsStr[ShipName][i] = {};
-        shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[1]) ;  //shipCenter es un arreglo con las posiciones x e y.
-        shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[0])+i - InicioDelBarco;
+        shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[0])+i - InicioDelBarco;  //shipCenter es un arreglo con las posiciones x e y.
+        shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[1]) ;
     }
 }
 
@@ -74,8 +74,8 @@ if(ShipVertical==false){  //se mueve X
         {
 
             shipsStr[ShipName][i] = {};
-            shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[1])+i - InicioDelBarco;  //shipCenter es un arreglo con las posiciones x e y.
-            shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[0]);
+            shipsStr[ShipName][i]["x"] = parseInt(ShipCenter[0]);  //shipCenter es un arreglo con las posiciones x e y.
+            shipsStr[ShipName][i]["y"] = parseInt(ShipCenter[1])+i - InicioDelBarco;
         }
     }
 
