@@ -132,23 +132,53 @@ function receiveEvent(event) {
 
     }
 
+    if (data.type == 'winner') {
+        div = document.getElementById("winner");
+        div.setAttribute("class","dialogForeground");
+        div.style.display = "block";
+        setTimeout("",5000);
+        div.style.display = "none";
+        div.setAttribute("class","");
+        return;
+    }
+
+    if (data.type == 'looser') {
+        div = document.getElementById("looser");
+        div.setAttribute("class","dialogForeground");
+        div.style.display = "block";
+        setTimeout("",5000);
+        div.style.display = "none";
+        div.setAttribute("class","");
+        return;
+    }
+
     if (data.type == 'shoot-attack') {
         document.getElementsByName(data.message)[1].parentNode.className = "hit";
+        //BattleshipBot.update
 	return;
     }
 
     if (data.type == 'miss-attack') {
         document.getElementsByName(data.message)[1].parentNode.className = "miss";
+
  	return;
     }
 
     if (data.type == 'shoot-defense') {
         document.getElementsByName(data.message)[2].parentNode.className = "hit";
+        //if(prendido){
+            //qValue = BattleshipBot.suggest();
+            //sendMessage("shoot");
+        //}
 	return;
     }
 
     if(data.type == 'miss-defense') {
 	document.getElementsByName(data.message)[2].parentNode.className = "miss";
+    //if(prendido){
+        //qValue = battleshipbot.suggest();
+        //sendMessage("shoot");
+    //}
 	return;
     }
 

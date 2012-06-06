@@ -36,11 +36,11 @@ public class Game {
     }
 
     private void waitForStrategy() {
-        message(playerOne, "wait", "Select your strategy, game starts in 10 seconds...");
-        message(playerTwo, "wait", "Select your strategy, game starts in 10 seconds...");
+        message(playerOne, "wait", "Select your strategy, game starts in 30 seconds...");
+        message(playerTwo, "wait", "Select your strategy, game starts in 30 seconds...");
         synchronized (this) {
             try {
-                this.wait(10000);
+                this.wait(30000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
