@@ -240,8 +240,4 @@
         return BattleshipBot;
     })();
     this.BattleshipBot = BattleshipBot;
-<<<<<<< HEAD
 }).call(this);
-=======
-}).call(this);
->>>>>>> a6f8d71d5854763a491157cd50adf98a02339aaa
