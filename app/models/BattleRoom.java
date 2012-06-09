@@ -81,8 +81,10 @@ public class BattleRoom {
 				    final String talk = jsonNode.get("text").asText();
 				    game.chat(player, talk);
 			    } else if (messageType.equals("shoot")) {
-                    final String [] position = jsonNode.get("shootValue").asText().split(",");
-				    game.shoot(player, position);
+                    if(game.getCurrentPlayer().getUsername().equals(player.getUsername())){
+                        final String [] position = jsonNode.get("shootValue").asText().split(",");
+                        game.shoot(player, position);
+                    }
 			    }
 			} else {
 			    game.chat(player, "");

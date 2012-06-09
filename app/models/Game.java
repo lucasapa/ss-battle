@@ -71,7 +71,6 @@ public class Game {
             while(!alreadySet){
                 alreadySet = generateShipDefaultStrategy(ship,strategy);
             }
-            System.out.println("1");
         }
 
 

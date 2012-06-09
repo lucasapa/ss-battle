@@ -4,6 +4,7 @@ var chatSocket = new WS(WSPath);
 chatSocket.onmessage = receiveEvent;
 $("#talk").keypress(handleReturnKey);
 $("#opponentBoard .boardBody").click(handleClick);
+var bot = new BattleshipBot();
 
 var leviathanPoss;
 var ninjaassassinPoss;
@@ -108,6 +109,7 @@ function receiveEvent(event) {
 
     if (data.type == 'strategy') {
         document.getElementById("boards").style.display = "block";
+        document.getElementById("autoplaydiv").style.display = "block";
         document.getElementById("strategyBoard").style.display = "none";
         document.getElementById("shipsBoard").style.display = "none";
 
@@ -126,6 +128,10 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'winner') {
+        $("span", chatLine).text(data.type);
+        $("p", chatLine).text("YOU WIN !!!");
+        $('#messages').append(chatLine);
+        document.getElementById("autoplay").checked = false;
         div = document.getElementById("winner");
         div.setAttribute("class","dialogForeground");
         div.style.display = "block";
@@ -136,6 +142,10 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'looser') {
+        $("span", chatLine).text(data.type);
+        $("p", chatLine).text("YOU LOOOOOSEEE");
+        $('#messages').append(chatLine);
+        document.getElementById("autoplay").checked = false;
         div = document.getElementById("looser");
         div.setAttribute("class","dialogForeground");
         div.style.display = "block";
@@ -147,31 +157,35 @@ function receiveEvent(event) {
 
     if (data.type == 'shoot-attack') {
         document.getElementsByName(data.message)[1].parentNode.className = "hit";
-        //BattleshipBot.update
+        var pos = data.message.split(",");
+        bot.update(parseInt(pos[0]),parseInt(pos[1]),"hit");
 	return;
     }
 
     if (data.type == 'miss-attack') {
         document.getElementsByName(data.message)[1].parentNode.className = "miss";
-
+        var pos = data.message.split(",");
+        bot.update(parseInt(pos[0]),parseInt(pos[1]),"miss");
  	return;
     }
 
     if (data.type == 'shoot-defense') {
         document.getElementsByName(data.message)[2].parentNode.className = "hit";
-        //if(prendido){
-            //qValue = BattleshipBot.suggest();
-            //sendMessage("shoot");
-        //}
+        if(document.getElementById("autoplay").checked == true){
+            var suggest = bot.suggest()
+            qValue = suggest.x+","+suggest.y;
+            sendMessage("shoot");
+        }
 	return;
     }
 
     if(data.type == 'miss-defense') {
-	document.getElementsByName(data.message)[2].parentNode.className = "miss";
-    //if(prendido){
-        //qValue = battleshipbot.suggest();
-        //sendMessage("shoot");
-    //}
+	    document.getElementsByName(data.message)[2].parentNode.className = "miss";
+        if(document.getElementById("autoplay").checked == true){
+            var suggest = bot.suggest()
+            qValue = suggest.x+","+suggest.y;
+            sendMessage("shoot");
+        }
 	return;
     }
 
@@ -188,8 +202,6 @@ function receiveEvent(event) {
 function handleClick(e){
     var position = e.target.firstChild.attributes["name"].value;
     qValue = position;
-
-//Chequear que solo en el opponentBoard se pueda hacer click
     sendMessage("shoot");
     console.log('Atacaste en la posición '+ position);
 }
