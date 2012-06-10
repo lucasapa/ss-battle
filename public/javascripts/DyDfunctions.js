@@ -37,7 +37,7 @@
                 }
                 return true;
             }
-            else if (!shipOutSide(event)){
+            else if (!shipOutSide(event[0].className)){
                 $(this).data("draggable").originalPosition = {
                     top: 0,
                     left: 0
@@ -50,7 +50,7 @@
     });
 
     function shipOutSide (e){
-       name = e[0].className;
+       name = e;
        var shipCenter = document.getElementsByClassName(name)[0].firstChild.attributes.name.value.split(",");
        TestEvent(name,ShipList[name]["length"],ShipList[name]["vertical"],shipCenter);
        for (i=0;i<ShipList[name]["length"];i++){
@@ -82,13 +82,21 @@
             click:function (event) {
                 if (!ShipList[event.srcElement.name]["vertical"]){
                     ShipList[event.srcElement.name]["vertical"]=true;
-                    ShipList[event.srcElement.name]["grado"]=90;
-                    $(this).rotate({ animateTo:90})
+                    if (shipOutSide(event.srcElement.name)){
+                        ShipList[event.srcElement.name]["grado"]=90;
+                        $(this).rotate({ animateTo:90})
+                    }
+                    else{ ShipList[event.srcElement.name]["vertical"]=false;
+                        alert("Se te va IDIOTA")}
                 }
                 else {
                     ShipList[event.srcElement.name]["vertical"] = false;
-                    ShipList[event.srcElement.name]["grado"]=0;
-                    $(this).rotate({ animateTo:0})
+                    if (shipOutSide(event.srcElement.name)){
+                        ShipList[event.srcElement.name]["grado"]=0;
+                        $(this).rotate({ animateTo:0})
+                   }
+                    else{ ShipList[event.srcElement.name]["vertical"] = true;
+                        alert("Se te va IDIOTA")}
                 }
             }
         }
