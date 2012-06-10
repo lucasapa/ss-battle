@@ -14,6 +14,7 @@ var redribbonPoss;
 var shipsStr;
 var testShip;
 
+
 function sendMessage(type) {
     chatSocket.send(JSON.stringify(
         {
@@ -28,11 +29,11 @@ function sendMessage(type) {
 
 function parseBoard(){
 
-    leviathanPoss = document.getElementsByClassName("leviathanship")[0].firstChild.attributes.name.value.split(",");
-    ninjaassassinPoss = document.getElementsByClassName("ninjaassassinship")[0].firstChild.attributes.name.value.split(",");
-    kakarotPoss = document.getElementsByClassName("kakarotship")[0].firstChild.attributes.name.value.split(",");
-    jackiePoss = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value.split(",");
-    redribbonPoss = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value.split(",");
+    ShipList ["leviathanship"]["Poss"] = document.getElementsByClassName("leviathanship")[0].firstChild.attributes.name.value.split(",");
+    ShipList ["ninjaassassinship"]["Poss"] = document.getElementsByClassName("ninjaassassinship")[0].firstChild.attributes.name.value.split(",");
+    ShipList ["kakarotship"]["Poss"] = document.getElementsByClassName("kakarotship")[0].firstChild.attributes.name.value.split(",");
+    ShipList ["jackieship"]["Poss"] = document.getElementsByClassName("jackieship")[0].firstChild.attributes.name.value.split(",");
+    ShipList ["redribbonship"]["Poss"] = document.getElementsByClassName("redribbonship")[0].firstChild.attributes.name.value.split(",");
     sendStrategyWS();
 
 }
@@ -45,11 +46,11 @@ function sendStrategyWS(){
     shipsStr = {}
     shipsStr["type"] = "strategy"
 
-    calculateAndCreate("Leviathan",leviathanShipLenght,leviathanShipVertical,leviathanPoss);
-    calculateAndCreate("Kakarot",KakarotShipLenght,KakarotShipVertical,kakarotPoss);
-    calculateAndCreate("Jackie",JackieShipLenght,JackieShipVertical,jackiePoss);
-    calculateAndCreate("RedRibbon",RedRibbonShipLenght,RedRibbonShipVertical,redribbonPoss);
-    calculateAndCreate("NinjaAssassin",ninjaAssasinShipLenght,ninjaAssasinShipVertical,ninjaassassinPoss);
+    calculateAndCreate("Leviathan",ShipList["leviathanship"]["length"],ShipList["leviathanship"]["vertical"],ShipList ["leviathanship"]["Poss"]);
+    calculateAndCreate("Kakarot",ShipList["kakarotship"]["length"],ShipList["kakarotship"]["vertical"],ShipList ["kakarotship"]["Poss"]);
+    calculateAndCreate("Jackie",ShipList["jackieship"]["length"],ShipList["jackieship"]["vertical"],ShipList ["jackieship"]["Poss"]);
+    calculateAndCreate("RedRibbon",ShipList["redribbonship"]["length"],ShipList["redribbonship"]["vertical"],ShipList ["redribbonship"]["Poss"]);
+    calculateAndCreate("NinjaAssassin",ShipList["ninjaassassinship"]["length"],ShipList["ninjaassassinship"]["vertical"],ShipList ["ninjaassassinship"]["Poss"]);
 
     chatSocket.send(JSON.stringify(shipsStr));
 
@@ -57,7 +58,7 @@ function sendStrategyWS(){
 
 function calculateAndCreate(ShipName,ShipLength,ShipVertical,ShipCenter){
 
-    var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
+    InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
                                                                                 // del barco busco (la mitad)
     shipsStr[ShipName] = {};
 
@@ -86,7 +87,7 @@ if(ShipVertical==false){  //se mueve X
 function TestEvent(ShipName,ShipLength,ShipVertical,ShipCenter){
 
     testShip ={};
-    var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
+    InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
     // del barco busco (la mitad)
     testShip[ShipName] = {};
 
