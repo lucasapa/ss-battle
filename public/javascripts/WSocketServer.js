@@ -12,6 +12,7 @@ var kakarotPoss;
 var jackiePoss;
 var redribbonPoss;
 var shipsStr;
+var testShip;
 
 function sendMessage(type) {
     chatSocket.send(JSON.stringify(
@@ -82,6 +83,33 @@ if(ShipVertical==false){  //se mueve X
 
 }
 
+function TestEvent(ShipName,ShipLength,ShipVertical,ShipCenter){
+
+    testShip ={};
+    var InicioDelBarco = (parseInt((ShipLength/2).toString().split(".")[0])); // formula para sacra la pimera posicion
+    // del barco busco (la mitad)
+    testShip[ShipName] = {};
+
+    if(ShipVertical==true){  //se mueve Y
+        for (var i=0;i<ShipLength;i=i+1)
+        {
+
+            testShip[ShipName][i] = {};
+            testShip[ShipName][i]["x"] = parseInt(ShipCenter[0])+i - InicioDelBarco;  //shipCenter es un arreglo con las posiciones x e y.
+            testShip[ShipName][i]["y"] = parseInt(ShipCenter[1]) ;
+        }
+    }
+
+    if(ShipVertical==false){  //se mueve X
+        for (var i=0;i<ShipLength;i=i+1)
+        {
+
+            testShip[ShipName][i] = {};
+            testShip[ShipName][i]["x"] = parseInt(ShipCenter[0]);  //shipCenter es un arreglo con las posiciones x e y.
+            testShip[ShipName][i]["y"] = parseInt(ShipCenter[1])+i - InicioDelBarco;
+        }
+    }
+}
 
 function receiveEvent(event) {
     var data = JSON.parse(event.data);
@@ -140,8 +168,7 @@ function receiveEvent(event) {
         div.setAttribute("class","");
         return;
     }
-
-    if (data.type == 'looser') {
+     if (data.type == 'looser') {
         $("span", chatLine).text(data.type);
         $("p", chatLine).text("YOU LOOOOOSEEE");
         $('#messages').append(chatLine);
@@ -169,7 +196,7 @@ function receiveEvent(event) {
  	return;
     }
 
-    if (data.type == 'shoot-defense') {
+   if (data.type == 'shoot-defense') {
         document.getElementsByName(data.message)[2].parentNode.className = "hit";
         if(document.getElementById("autoplay").checked == true){
             var suggest = bot.suggest()
