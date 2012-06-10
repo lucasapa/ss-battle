@@ -29,15 +29,22 @@
         snap:'#strategyBoard .boardBody',     // esta opcion es para que se autoajuste a algun div cdo apoyas el barco.( sirve para que no queden resutlados null)
         revert: function (event, ui) {
             //overwrite original position
-            if (!shipOutSide(event)){
+            if (event[0]== null) {
+
                 $(this).data("draggable").originalPosition = {
                     top: 0,
                     left: 0
                 }
                 return true;
             }
-            $(this).draggable('option','revert','invalid')
-            return true;
+            else if (!shipOutSide(event)){
+                $(this).data("draggable").originalPosition = {
+                    top: 0,
+                    left: 0
+                }
+                return true;
+            }
+
         }
 
     });
