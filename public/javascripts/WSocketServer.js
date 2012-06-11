@@ -134,9 +134,13 @@ function receiveEvent(event) {
     if (data.type == 'mistake') $(chatLine).addClass('mistake');
     if (data.type == 'start') $(chatLine).addClass('start');
     if (data.type == 'leave') $(chatLine).addClass('leave');
-    if (data.type == 'attinfo') $.timeout(500).done(function() {
-        alert("hitted");
-    });;
+    if (data.type == 'attinfo'){
+        $("#freeow").freeow("Info", data.message, {
+            autoHide: true,
+            autoHideDelay: 3000
+        });
+    }
+
 
 
     if (data.type == 'strategy') {
