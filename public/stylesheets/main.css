@@ -74,6 +74,7 @@ body {
 #main {
     position: relative;
     overflow: hidden;
+    display: none;
 }
 
 #onError, #onChat {

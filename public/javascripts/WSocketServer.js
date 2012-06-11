@@ -123,9 +123,6 @@ function receiveEvent(event) {
         return
     } else {
         $("#onChat").show();
-        document.getElementById("main").style.display = "none";
-
-
     }
 
     // Create the message element
@@ -147,7 +144,7 @@ function receiveEvent(event) {
 
 
     if (data.type == 'strategy') {
-        document.getElementById("main").style.display = "block";
+
         document.getElementById("boards").style.display = "block";
         document.getElementById("autoplaydiv").style.display = "block";
         document.getElementById("strategyBoard").style.display = "none";
@@ -162,6 +159,9 @@ function receiveEvent(event) {
                 document.getElementsByName(ships[i].fragments[j].x+","+ships[i].fragments[j].y)[2].parentNode.className = "static";
             }
         }
+
+        document.getElementById("main").style.display = "block";
+
         return;
 
 
