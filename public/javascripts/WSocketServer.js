@@ -134,7 +134,10 @@ function receiveEvent(event) {
     if (data.type == 'mistake') $(chatLine).addClass('mistake');
     if (data.type == 'start') $(chatLine).addClass('start');
     if (data.type == 'leave') $(chatLine).addClass('leave');
-    if (data.type == 'info') $(chatLine).addClass('info');
+    if (data.type == 'attinfo') $.timeout(500).done(function() {
+        alert("hitted");
+    });;
+
 
     if (data.type == 'strategy') {
         document.getElementById("boards").style.display = "block";
