@@ -40,7 +40,6 @@ public class Game {
         synchronized (this) {
             try {
                 this.wait(30000);
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -142,7 +141,7 @@ public class Game {
         if (currentState == TurnState.SHOOTING) {
             message(getCurrentPlayer(), "info", "You shoot !");
             message(getAlternative(), "info", "Other player's shoot!");
-        } else{
+        } else if(currentState == TurnState.WAITING) {
             message(getAlternative(), "wait", "Wait for" +getCurrentPlayer().getUsername()+"");
             message(getCurrentPlayer(), "wait", "Wait for "+getAlternative().getUsername()+"");
         }
@@ -221,6 +220,7 @@ public class Game {
              }
         }
         message(player, "attinfo", "You Win");
+        currentState = TurnState.FINISHED;
         return true;
     }
 
@@ -292,5 +292,5 @@ public class Game {
                 '}';
     }
 
-    private enum TurnState {SHOOTING, WAITING}
+    private enum TurnState {SHOOTING, WAITING, FINISHED}
 }
