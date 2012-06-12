@@ -150,16 +150,20 @@ function receiveEvent(event) {
             autoHideDelay: 30000
         });
 
-        var newValue;
+
         function restar(){
             for(i=0; i<document.getElementsByClassName("paragraph-freeow").length;i++){
                 if(document.getElementsByClassName("paragraph-freeow")[i].innerHTML.indexOf("strategy") != -1){
                     var innerString = document.getElementsByClassName("paragraph-freeow")[i].innerHTML;
                     var lastValue = innerString.substring(37,39);
+                    var newValue;
                     if(parseInt(lastValue)>0){
                         newValue = (parseInt(lastValue)-1)+" ";
                         var newString = innerString.replace(lastValue,newValue);
                         document.getElementsByClassName("paragraph-freeow")[i].innerHTML = newString;
+                    }
+                    if(sentStrategy != true && newValue == 0){
+                        sendMessage("autoStrategy");
                     }
                 }
             }
@@ -167,9 +171,7 @@ function receiveEvent(event) {
 
         setInterval(restar, 1000);
 
-        if(sentStrategy != true && newValue == 0){
-            sendMessage("autoStrategy");
-        }
+
         return;
     }
 
