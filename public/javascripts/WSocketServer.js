@@ -5,6 +5,7 @@ chatSocket.onmessage = receiveEvent;
 $("#talk").keypress(handleReturnKey);
 $("#opponentBoard .boardBody").click(handleClick);
 var bot = new BattleshipBot();
+sentStrategy = false;
 
 var leviathanPoss;
 var ninjaassassinPoss;
@@ -51,7 +52,7 @@ function sendStrategyWS(){
     calculateAndCreate("Jackie",ShipList["jackieship"]["length"],ShipList["jackieship"]["vertical"],ShipList ["jackieship"]["Poss"]);
     calculateAndCreate("RedRibbon",ShipList["redribbonship"]["length"],ShipList["redribbonship"]["vertical"],ShipList ["redribbonship"]["Poss"]);
     calculateAndCreate("NinjaAssassin",ShipList["ninjaassassinship"]["length"],ShipList["ninjaassassinship"]["vertical"],ShipList ["ninjaassassinship"]["Poss"]);
-
+    sentStrategy = true;
     chatSocket.send(JSON.stringify(shipsStr));
 
 }
@@ -141,6 +142,7 @@ function receiveEvent(event) {
             autoHide: true,
             autoHideDelay: 3000
         });
+        return;
     }
     if (data.type == 'strategyStart'){
         $("#freeow").freeow("Info", data.message, {
@@ -148,13 +150,14 @@ function receiveEvent(event) {
             autoHideDelay: 30000
         });
 
+        var newValue;
         function restar(){
             for(i=0; i<document.getElementsByClassName("paragraph-freeow").length;i++){
                 if(document.getElementsByClassName("paragraph-freeow")[i].innerHTML.indexOf("strategy") != -1){
                     var innerString = document.getElementsByClassName("paragraph-freeow")[i].innerHTML;
                     var lastValue = innerString.substring(37,39);
                     if(parseInt(lastValue)>0){
-                        var newValue = (parseInt(lastValue)-1)+" ";
+                        newValue = (parseInt(lastValue)-1)+" ";
                         var newString = innerString.replace(lastValue,newValue);
                         document.getElementsByClassName("paragraph-freeow")[i].innerHTML = newString;
                     }
@@ -164,8 +167,10 @@ function receiveEvent(event) {
 
         setInterval(restar, 1000);
 
-
-
+        if(sentStrategy != true && newValue == 0){
+            sendMessage("autoStrategy");
+        }
+        return;
     }
 
     if (data.type == 'strategy') {

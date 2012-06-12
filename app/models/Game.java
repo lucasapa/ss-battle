@@ -30,30 +30,27 @@ public class Game {
         start = true;
         currentState = TurnState.WAITING;
         waitForStrategy();
-        setRandomTurn();
-        notifyStart();
-        notifyTurn();
+
     }
 
     private void waitForStrategy() {
         message(playerOne, "strategyStart", "Select your strategy, game starts in 30 seconds...");
         message(playerTwo, "strategyStart", "Select your strategy, game starts in 30 seconds...");
+
         synchronized (this) {
             try {
                 this.wait(30000);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
 
-        if(playerOne.getStrategy() == null){
-            generateDefaultStrategies(playerOne);
         }
-        if(playerTwo.getStrategy() == null){
-            generateDefaultStrategies(playerTwo);
-        }
+            currentState = TurnState.SHOOTING;
+            setRandomTurn();
+            notifyStart();
+            notifyTurn();
 
-        currentState = TurnState.SHOOTING;
     }
 
     private void setRandomTurn() {
@@ -62,7 +59,9 @@ public class Game {
         currentPlayer = roll == 1 ? playerOne : playerTwo;
     }
 
-    private void generateDefaultStrategies(Player player) {
+    public void generateDefaultStrategies(Player player) {
+        message(player, "attinfo", "Auto-generating your strategy..");
+        player.setStrategy(new Strategy());
         Strategy strategy = new Strategy();
         player.setStrategy(strategy);
 
@@ -72,7 +71,6 @@ public class Game {
                 alreadySet = generateShipDefaultStrategy(ship,strategy);
             }
         }
-
 
         Gson gson = new Gson();
         String jsonOutput = gson.toJson(strategy);
@@ -124,15 +122,11 @@ public class Game {
 
 
     public void setStrategyForPlayer(Player player, Strategy strategy){
-
-        Gson gson = new Gson();
-        String jsonOutput = gson.toJson(strategy);
-        message(player, "strategy", jsonOutput);
-
         player.setStrategy(strategy);
-        if(playerOne.getStrategy() != null && playerTwo.getStrategy() != null){
-            currentState = TurnState.SHOOTING;
-        }
+        message(player, "attinfo", "Adding your strategy..");
+        Gson gson = new Gson();
+        String jsonOutput = gson.toJson(player.getStrategy());
+        message(player, "strategy", jsonOutput);
     }
 
 
@@ -144,6 +138,7 @@ public class Game {
     }
 
     private void notifyTurn() {
+
         if (currentState == TurnState.SHOOTING) {
             message(getCurrentPlayer(), "info", "You shoot !");
             message(getAlternative(), "info", "Other player's shoot!");
@@ -225,6 +220,7 @@ public class Game {
                       return false;
              }
         }
+        message(player, "attinfo", "You Win");
         return true;
     }
 

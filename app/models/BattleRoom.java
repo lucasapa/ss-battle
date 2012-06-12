@@ -62,7 +62,6 @@ public class BattleRoom {
 			String messageType = jsonNode.get("type").asText();
             if (messageType.equals("strategy")) {
                 Strategy strategy = new Strategy();
-
                 for(Ship ship:strategy.getShips()){
                     JsonNode fragments = jsonNode.get(ship.getName());
                     for(int i=0;i<fragments.size();i++){
@@ -75,6 +74,9 @@ public class BattleRoom {
 
                 game.setStrategyForPlayer(player,strategy);
             }
+                if (messageType.equals("autoStrategy")) {
+                  game.generateDefaultStrategies(player);
+                }
 
 			if (game.isStart()) {
 			    if (messageType.equals("chat")) {

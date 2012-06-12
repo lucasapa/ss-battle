@@ -32,6 +32,7 @@ public class Player {
     }
 
     public void setStrategy(Strategy strategy){
+        this.strategy = null;
         this.strategy = strategy;
     }
 
