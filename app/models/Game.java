@@ -36,8 +36,8 @@ public class Game {
     }
 
     private void waitForStrategy() {
-        message(playerOne, "attinfo", "Select your strategy, game starts in 30 seconds...");
-        message(playerTwo, "attinfo", "Select your strategy, game starts in 30 seconds...");
+        message(playerOne, "strategyStart", "Select your strategy, game starts in 30 seconds...");
+        message(playerTwo, "strategyStart", "Select your strategy, game starts in 30 seconds...");
         synchronized (this) {
             try {
                 this.wait(30000);

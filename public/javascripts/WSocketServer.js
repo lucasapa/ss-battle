@@ -112,6 +112,8 @@ function TestEvent(ShipName,ShipLength,ShipVertical,ShipCenter){
     }
 }
 
+
+
 function receiveEvent(event) {
     var data = JSON.parse(event.data);
 
@@ -140,8 +142,31 @@ function receiveEvent(event) {
             autoHideDelay: 3000
         });
     }
+    if (data.type == 'strategyStart'){
+        $("#freeow").freeow("Info", data.message, {
+            autoHide: true,
+            autoHideDelay: 30000
+        });
+
+        function restar(){
+            for(i=0; i<document.getElementsByClassName("paragraph-freeow").length;i++){
+                if(document.getElementsByClassName("paragraph-freeow")[i].innerHTML.indexOf("strategy") != -1){
+                    var innerString = document.getElementsByClassName("paragraph-freeow")[i].innerHTML;
+                    var lastValue = innerString.substring(37,39);
+                    if(parseInt(lastValue)>0){
+                        var newValue = (parseInt(lastValue)-1)+" ";
+                        var newString = innerString.replace(lastValue,newValue);
+                        document.getElementsByClassName("paragraph-freeow")[i].innerHTML = newString;
+                    }
+                }
+            }
+        };
+
+        setInterval(restar, 1000);
 
 
+
+    }
 
     if (data.type == 'strategy') {
 

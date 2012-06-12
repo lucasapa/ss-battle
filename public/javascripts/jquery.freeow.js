@@ -178,7 +178,7 @@
                     '<div class="background">',
                     '<div class="content">',
                     '<h2>' + title + '</h2>',
-                    '<p>' + message + '</p>',
+                    '<p class="paragraph-freeow">' + message + '</p>',
                     '</div>',
                     '</div>',
                     '<span class="icon"></span>',
