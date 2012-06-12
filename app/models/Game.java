@@ -37,6 +37,7 @@ public class Game {
         message(playerOne, "strategyStart", "Select your strategy, game starts in 30 seconds...");
         message(playerTwo, "strategyStart", "Select your strategy, game starts in 30 seconds...");
 
+        /*
         synchronized (this) {
             try {
                 this.wait(30000);
@@ -45,11 +46,12 @@ public class Game {
             }
 
         }
+
             currentState = TurnState.SHOOTING;
             setRandomTurn();
             notifyStart();
             notifyTurn();
-
+        */
     }
 
     private void setRandomTurn() {
@@ -60,7 +62,6 @@ public class Game {
 
     public void generateDefaultStrategies(Player player) {
         message(player, "attinfo", "Auto-generating your strategy..");
-        player.setStrategy(new Strategy());
         Strategy strategy = new Strategy();
         player.setStrategy(strategy);
 
@@ -74,6 +75,13 @@ public class Game {
         Gson gson = new Gson();
         String jsonOutput = gson.toJson(strategy);
         message(player, "strategy", jsonOutput);
+        if(playerOne.getStrategy() != null && playerTwo.getStrategy() != null && currentState == TurnState.WAITING){
+            currentState = TurnState.SHOOTING;
+            setRandomTurn();
+            notifyStart();
+            notifyTurn();
+        }
+
     }
 
 
@@ -126,6 +134,12 @@ public class Game {
         Gson gson = new Gson();
         String jsonOutput = gson.toJson(player.getStrategy());
         message(player, "strategy", jsonOutput);
+        if(playerOne.getStrategy() != null && playerTwo.getStrategy() != null && currentState == TurnState.WAITING){
+            currentState = TurnState.SHOOTING;
+            setRandomTurn();
+            notifyStart();
+            notifyTurn();
+        }
     }
 
 

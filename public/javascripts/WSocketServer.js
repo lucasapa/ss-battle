@@ -176,6 +176,8 @@ function receiveEvent(event) {
     }
 
     if (data.type == 'strategy') {
+        //$("#freeow").hide();
+
 
         document.getElementById("boards").style.display = "block";
         document.getElementById("autoplaydiv").style.display = "block";
