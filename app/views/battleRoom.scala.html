@@ -515,10 +515,12 @@
 
 
 <div id="winner">
-    <b>YOU WIN</b>
+    <button name="close" onclick="javascript:document.getElementById('looser').style.display = 'none'">Close</button>
+    <button name="retry" onclick="javascript:location.reload(true)" >Play Again</button>
 </div>
 <div id="looser">
-    <b>YOU LOOSE</b>
+    <button name="close" onclick="javascript:document.getElementById('looser').style.display = 'none'">Close</button>
+    <button name="retry" onclick="javascript:location.reload(true)" >Play Again</button>
 </div>
 
 

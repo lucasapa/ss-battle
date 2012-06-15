@@ -233,7 +233,6 @@ public class Game {
                       return false;
              }
         }
-        message(player, "attinfo", "You Win");
         currentState = TurnState.FINISHED;
         return true;
     }

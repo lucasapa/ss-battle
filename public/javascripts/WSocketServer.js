@@ -114,6 +114,10 @@ function TestEvent(ShipName,ShipLength,ShipVertical,ShipCenter){
 }
 
 
+function hideMsg(){
+
+}
+
 
 function receiveEvent(event) {
     var data = JSON.parse(event.data);
@@ -171,13 +175,10 @@ function receiveEvent(event) {
 
         setInterval(restar, 1000);
 
-
         return;
     }
 
     if (data.type == 'strategy') {
-        //$("#freeow").hide();
-
 
         document.getElementById("boards").style.display = "block";
         document.getElementById("autoplaydiv").style.display = "block";
@@ -207,11 +208,9 @@ function receiveEvent(event) {
         $('#messages').append(chatLine);
         document.getElementById("autoplay").checked = false;
         div = document.getElementById("winner");
-        div.setAttribute("class","dialogForeground");
+        div.setAttribute("class","winClass");
         div.style.display = "block";
-        setTimeout("",5000);
-        div.style.display = "none";
-        div.setAttribute("class","");
+
         return;
     }
      if (data.type == 'looser') {
@@ -220,11 +219,10 @@ function receiveEvent(event) {
         $('#messages').append(chatLine);
         document.getElementById("autoplay").checked = false;
         div = document.getElementById("looser");
-        div.setAttribute("class","dialogForeground");
-        div.style.display = "block";
-        setTimeout("",5000);
-        div.style.display = "none";
-        div.setAttribute("class","");
+         div.setAttribute("class","looseClass");
+
+         div.style.display = "block";
+
         return;
     }
 

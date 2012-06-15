@@ -87,7 +87,11 @@
                         $(this).rotate({ animateTo:90})
                     }
                     else{ ShipList[event.srcElement.name]["vertical"]=false;
-                        alert("Se te va IDIOTA")}
+                        $("#freeow").freeow("Info", "Invalid Position", {
+                            autoHide: true,
+                            autoHideDelay: 3000
+                        });
+                    }
                 }
                 else {
                     ShipList[event.srcElement.name]["vertical"] = false;
@@ -96,7 +100,11 @@
                         $(this).rotate({ animateTo:0})
                    }
                     else{ ShipList[event.srcElement.name]["vertical"] = true;
-                        alert("Se te va IDIOTA")}
+                        $("#freeow").freeow("Info", "Invalid Position", {
+                            autoHide: true,
+                            autoHideDelay: 3000
+                        });
+                    }
                 }
             }
         }
